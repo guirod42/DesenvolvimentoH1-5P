@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollVi
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons'; // Importa o pacote de ícones
-import styles from '../../assets/styles';
+import styles from '../../styles/styles';
 import Cabecalho from '../../components/Cabecalho';
 
 export default function ConversaoMoeda() {

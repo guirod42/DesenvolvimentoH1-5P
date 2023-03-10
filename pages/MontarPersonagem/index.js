@@ -3,7 +3,7 @@ import { StyleSheet, Image, Text, View, TextInput, TouchableOpacity, Keyboard, S
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
-import styles from '../../assets/styles';
+import styles from '../../styles/styles';
 
 const EstruturaPersonagem = (props) => {
   const { name, level, profession, strength } = props;

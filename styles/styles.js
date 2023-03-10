@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import colors from  '../styles/colors'
 
 const styles = StyleSheet.create({
     backButton: {
@@ -13,7 +14,7 @@ const styles = StyleSheet.create({
 
     button: {
         alignItems: 'center',
-        backgroundColor: '#555555',
+        backgroundColor: colors.dark_gray,
         borderRadius: 10,
         elevation: 60,
         fontSize: 16,
@@ -53,7 +54,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 24,
         shadowColor: '#ccc',
         shadowOpacity: 0,
-        opacity: 0.5,
     },
 
     buttonPrincipal: {
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         paddingHorizontal: 24,
         shadowColor: '#ccc',
-        shadowOpacity: 20,
+        opacity: 0.2,
     },
 
     buttonText: {

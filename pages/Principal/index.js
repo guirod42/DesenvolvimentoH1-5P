@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons';
-import styles from '../../assets/styles';
+import styles from '../../styles/styles'
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default function PaginaPrincipal() {
 
@@ -52,11 +53,11 @@ export default function PaginaPrincipal() {
                             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Churrascometro')}>
                                 <Text style={styles.buttonText}>Churrascômetro</Text>
                             </TouchableOpacity>
-                            
+
                             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('PaginaLogin')}>
                                 <Text style={styles.buttonText}>Login</Text>
                             </TouchableOpacity>
-                            
+
                             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CalculadoraIMC')}>
                                 <Text style={styles.buttonText}>Calculadora de IMC</Text>
                             </TouchableOpacity>
@@ -76,7 +77,7 @@ export default function PaginaPrincipal() {
                             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('PersonagemTeste')}>
                                 <Text style={styles.buttonText}>PersonagemTeste</Text>
                             </TouchableOpacity>
-                            
+
                             <TouchableOpacity style={styles.button} onPress={trocarFundo}>
                                 <Text style={styles.buttonText}>Trocar Imagem</Text>
                             </TouchableOpacity>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, Image, View, ImageBackground, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
-import styles from '../../assets/styles';
+import styles from '../../styles/styles';
 import Cabecalho from '../../components/Cabecalho';
 
 export default function ApresentandoImagem() {
