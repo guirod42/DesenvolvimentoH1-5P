@@ -13,8 +13,9 @@ import { useNavigation } from '@react-navigation/core';
 
 import MyButton from '../../components/MyButton/';
 import LinkButton from '../../components/LinkButton/';
-
 import colors from '../../styles/colors';
+import stylesGlobal from '../../styles/styles';
+
 //import Loading from '../../Components/Loading/Loading';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -70,39 +71,33 @@ export default function Login() {
         <View style={styles.container}>
             <Text style={styles.textTitle}>Seja bem vindo!</Text>
             <TextInput
-                style={styles.textInput}
+                style={stylesGlobal.textInput}
                 placeholder="Login"
                 onChangeText={text => setLogin(text)}
                 value={txtLogin}
             />
-            <View style={styles.passwordContainer}>
+            <View style={stylesGlobal.passwordContainer}>
                 <TextInput
-                    style={styles.textInputPassword}
+                    style={stylesGlobal.textInputPassword}
                     placeholder="Senha"
                     onChangeText={text => setSenha(text)}
                     value={txtSenha}
                     secureTextEntry={flShowPass}
                 />
+
                 <Feather
-                    style={styles.iconEye}
+                    style={stylesGlobal.iconEye}
                     name={iconPass}
                     size={28}
                     color={colors.redButton}
                     onPress={handleChangeIcon}
                 />
             </View>
-
-            <MyButton title='Entrar' onPress={navigateToHome}
-
-            />
-
-            <LinkButton title='Inscrever-se'
-                onPress={navigateToNewUser}
-            />
+            <MyButton title='Entrar' onPress={navigateToHome} />
+            <LinkButton title='Inscrever-se' onPress={navigateToNewUser} />
         </View>
     );
 }
-
 
 const styles = StyleSheet.create({
     container: {
@@ -111,52 +106,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+
     textTitle: {
         color: 'red',
         fontSize: 28,
         marginBottom: 8
-    },
-    textInput: {
-        height: 40,
-        borderColor: colors.gray,
-        borderRadius: 8,
-        borderWidth: 1,
-        width: '70%',
-        marginBottom: 16,
-        paddingHorizontal: 8
-    },
-    textInputPassword: {
-        height: 40,
-        borderWidth: 0,
-        width: '70%',
-        marginBottom: 16,
-        paddingHorizontal: 8
-    },
-    buttonIn: {
-        backgroundColor: colors.redButton,
-        borderRadius: 8,
-        height: 50,
-        width: '70%',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    buttonTextIn: {
-        color: '#FFF',
-        fontSize: 18,
-        fontWeight: 'bold'
-    },
-    passwordContainer: {
-        marginBottom: 16,
-        height: 40,
-        borderColor: '#dcdce6',
-        borderRadius: 8,
-        borderWidth: 1,
-        width: '70%',
-        flexDirection: 'row',
-        justifyContent: 'space-between'
-    },
-    iconEye: {
-        paddingHorizontal: 8,
-        marginTop: 6
     },
 });

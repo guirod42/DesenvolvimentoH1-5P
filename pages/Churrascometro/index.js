@@ -4,9 +4,10 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollVi
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
-import styles from '../../styles/styles';
+import stylesGlobal from '../../styles/styles';
 import Cabecalho from '../../components/Cabecalho';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import colors from '../../styles/colors';
 
 export default function Churrascometro() {
 
@@ -18,58 +19,96 @@ export default function Churrascometro() {
     const [QtdCarneHomens, setQtdCarneHomens] = useState(0);
     const [QtdCarneMulheres, setQtdCarneMulheres] = useState(0);
     const [QtdCarneCriancas, setQtdCarneCriancas] = useState(0);
+    const [QtdSacosCarvao, setQtdSacosCarvao] = useState(0);
     const [TotalCarne, setTotalCarne] = useState(0);
+    const [CalculoCerto, setCalculoCerto] = useState(true);
     const [MostrarResultado, setMostrarResultado] = useState(false);
 
     function CalcularChurrasco() {
         const qtdCarnePessoa = 0.4;
+        const qtdCarvaoSaco = 5;
+        const qdtCarnePorSacoCarvao = 6;
         let tHomens = TotalHomens * qtdCarnePessoa;
         let tMulheres = TotalMulheres * qtdCarnePessoa * 0.75;
         let tCriancas = TotalCriancas * qtdCarnePessoa * 0.5;
-        setQtdCarneHomens(tHomens); //vai procurar no "DOM"
+        let tCarne = (tHomens + tMulheres + tCriancas);
+
+        let qtdCarvao = tCarne / qdtCarnePorSacoCarvao;
+        let tSacosCarvao = Math.ceil(qtdCarvao);
+
+        setQtdCarneHomens((tHomens).toFixed(2)); //vai procurar no "DOM"
         setQtdCarneMulheres((tMulheres).toFixed(2));
         setQtdCarneCriancas((tCriancas).toFixed(2));
-        setTotalCarne((tHomens + tMulheres + tCriancas).toFixed(2));
+        setQtdSacosCarvao(tSacosCarvao);
+        setTotalCarne(tCarne.toFixed(2));
+
+        setCalculoCerto(true);
         setMostrarResultado(true);
+        if (tHomens < 0 || tMulheres < 0 || tCriancas < 0 || !(parseInt(tCarne) === false)) {
+            setCalculoCerto(false);
+            setMostrarResultado(false);
+        }
+        
         Keyboard.dismiss();
     }
 
     return (
         <View style={styles.container}>
             <Cabecalho title="Churrascômetro" onPress={() => navigation.goBack()} />
-            <ScrollView>
+            <Text style={styles.textTitle}>Churrascômetro fooi</Text>
+            <ScrollView style={stylesGlobal.scrollView}>
                 <TextInput
-                    style={styles.input}
+                    style={stylesGlobal.input}
                     placeholder="Quantidade de Homens"
                     keyboardType="numeric"
                     onChangeText={(z) => setTotalHomens(z)}
                 />
 
                 <TextInput
-                    style={styles.input}
+                    style={stylesGlobal.input}
                     placeholder="Quantidade de Mulheres"
                     keyboardType="numeric"
                     onChangeText={(z) => setTotalMulheres(z)}
                 />
 
                 <TextInput
-                    style={styles.input}
+                    style={stylesGlobal.input}
                     placeholder="Quantidade de Crianças"
                     keyboardType="numeric"
                     onChangeText={(z) => setTotalCriancas(z)}
                 />
 
-                <TouchableOpacity style={styles.button} onPress={CalcularChurrasco}>
-                    <Text style={styles.buttonText}>Calcular Churrasco</Text>
+                <TouchableOpacity style={stylesGlobal.button} onPress={CalcularChurrasco}>
+                    <Text style={stylesGlobal.buttonText}>Calcular Churrasco</Text>
                 </TouchableOpacity>
+
                 {MostrarResultado &&
                     <>
-                        <Text style={styles.resultado}>Serão necessários {TotalCarne}Kg de Carne</Text>
-                        <Text style={styles.resultado}>{QtdCarneHomens}Kg para Homens</Text>
-                        <Text style={styles.resultado}>{QtdCarneMulheres}Kg para Mulheres</Text>
+                        <Text style={stylesGlobal.resultado}>Serão necessários {TotalCarne}Kg de Carne</Text>
+                        <Text style={stylesGlobal.resultado}>{QtdCarneHomens}Kg para Homens</Text>
+                        <Text style={stylesGlobal.resultado}>{QtdCarneMulheres}Kg para Mulheres</Text>
+                        <Text style={stylesGlobal.resultado}>{QtdCarneCriancas}Kg para Crianças</Text>
+                        <Text style={stylesGlobal.resultado}>Serão gastos {QtdSacosCarvao} saco(s) de carvão</Text>
                     </>
                 }
+                {!CalculoCerto && <Text style={stylesGlobal.resultado}>Favor inserir os dados corretamente!</Text>}
             </ScrollView>
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: colors.background,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    textTitle: {
+        color: 'red',
+        fontSize: 28,
+        marginBottom: 8,
+    },
+});
+

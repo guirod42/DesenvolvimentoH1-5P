@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import colors from  '../styles/colors'
+import colors from '../styles/colors'
 
 const styles = StyleSheet.create({
     backButton: {
@@ -71,10 +71,25 @@ const styles = StyleSheet.create({
         opacity: 0.2,
     },
 
+    buttonIn: {
+        backgroundColor: colors.redButton,
+        borderRadius: 8,
+        height: 50,
+        width: '70%',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+
     buttonText: {
         color: '#fff',
         fontSize: 18,
         fontWeight: 'bold',
+    },
+
+    buttonTextIn: {
+        color: '#FFF',
+        fontSize: 18,
+        fontWeight: 'bold'
     },
 
     centerPage: {
@@ -84,11 +99,6 @@ const styles = StyleSheet.create({
 
     column: {
         flex: 1,
-        justifyContent: 'center',
-    },
-
-    headerPrincipal: {
-        flexDirection: 'row',
         justifyContent: 'center',
     },
 
@@ -113,11 +123,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        
+
     },
 
     containerTrocaImagem: {
         justifyContent: 'space-between',
+    },
+
+    iconEye: {
+        paddingHorizontal: 8,
+        marginTop: 6
     },
 
     image: {
@@ -133,16 +148,6 @@ const styles = StyleSheet.create({
     imageContainer: {
         alignItems: 'center',
         justifyContent: 'center',
-    },
-
-    input: {
-        alignItems: 'stretch',
-        backgroundColor: '#fff',
-        borderRadius: 10,
-        fontSize: 16,
-        height: 60,
-        marginTop: 10,
-        paddingHorizontal: 24,
     },
 
     inputContainer: {
@@ -161,6 +166,17 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
 
+    passwordContainer: {
+        marginBottom: 16,
+        height: 40,
+        borderColor: '#dcdce6',
+        borderRadius: 8,
+        borderWidth: 1,
+        width: '70%',
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+
     resultado: {
         color: '#000',
         fontSize: 24,
@@ -171,7 +187,7 @@ const styles = StyleSheet.create({
 
     scrollView: {
         flex: 1,
-        width: '100%',
+        width: '95%',
     },
 
     selecionaSexo: {
@@ -194,6 +210,35 @@ const styles = StyleSheet.create({
         fontSize: 18,
         padding: 5,
         textAlign: 'center',
+    },
+
+    textInput: {
+        height: 40,
+        borderColor: colors.gray,
+        borderRadius: 8,
+        borderWidth: 1,
+        width: '70%',
+        marginBottom: 16,
+        paddingHorizontal: 8
+    },
+
+    input: {
+        height: 40,
+        borderColor: colors.gray,
+        borderRadius: 8,
+        borderWidth: 1,
+        marginBottom: 16,
+        paddingHorizontal: 8,
+        fontSize: 16,
+        marginTop: 10,
+    },
+
+    textInputPassword: {
+        height: 40,
+        borderWidth: 0,
+        width: '70%',
+        marginBottom: 16,
+        paddingHorizontal: 8
     },
 
     textResult: {
@@ -223,3 +268,4 @@ const styles = StyleSheet.create({
 });
 
 export default styles;
+

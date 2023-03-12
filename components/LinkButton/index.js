@@ -16,7 +16,6 @@ export default function LinkButton(props) {
                 <Text style={styles.MyTextButtonStyle}> {props.title} </Text>
             </TouchableOpacity>
         </>
-
     );
 }
 
