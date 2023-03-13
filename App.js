@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import PaginaPrincipal from './pages/Principal';
+import PaginaPrincipal from './pages/PaginaPrincipal';
 import CalculadoraIMC from './pages/CalculadoraIMC';
 import ConversaoMoeda from './pages/ConversaoMoeda';
 import ApresentandoImagem from './pages/ApresentarImagens';

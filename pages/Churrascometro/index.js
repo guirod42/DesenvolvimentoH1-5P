@@ -22,11 +22,11 @@ export default function Churrascometro() {
     const [QtdSacosCarvao, setQtdSacosCarvao] = useState(0);
     const [TotalCarne, setTotalCarne] = useState(0);
     const [CalculoCerto, setCalculoCerto] = useState(true);
+    const [SemValores, setSemValores] = useState(true);
     const [MostrarResultado, setMostrarResultado] = useState(false);
 
     function CalcularChurrasco() {
         const qtdCarnePessoa = 0.4;
-        const qtdCarvaoSaco = 5;
         const qdtCarnePorSacoCarvao = 6;
         let tHomens = TotalHomens * qtdCarnePessoa;
         let tMulheres = TotalMulheres * qtdCarnePessoa * 0.75;
@@ -36,7 +36,7 @@ export default function Churrascometro() {
         let qtdCarvao = tCarne / qdtCarnePorSacoCarvao;
         let tSacosCarvao = Math.ceil(qtdCarvao);
 
-        setQtdCarneHomens((tHomens).toFixed(2)); //vai procurar no "DOM"
+        setQtdCarneHomens((tHomens).toFixed(2));
         setQtdCarneMulheres((tMulheres).toFixed(2));
         setQtdCarneCriancas((tCriancas).toFixed(2));
         setQtdSacosCarvao(tSacosCarvao);
@@ -44,18 +44,25 @@ export default function Churrascometro() {
 
         setCalculoCerto(true);
         setMostrarResultado(true);
-        if (tHomens < 0 || tMulheres < 0 || tCriancas < 0 || !(parseInt(tCarne) === false)) {
+        setSemValores(false);
+
+        if (tCarne == 0) {
+            setSemValores(true);
+            setMostrarResultado(false);
+        }
+
+        if (tHomens < 0 || tMulheres < 0 || tCriancas < 0 || isNaN(tCarne)) {
             setCalculoCerto(false);
             setMostrarResultado(false);
         }
-        
+
         Keyboard.dismiss();
     }
 
     return (
         <View style={styles.container}>
             <Cabecalho title="Churrascômetro" onPress={() => navigation.goBack()} />
-            <Text style={styles.textTitle}>Churrascômetro fooi</Text>
+            <Text style={styles.textTitle}>Churrascômetro</Text>
             <ScrollView style={stylesGlobal.scrollView}>
                 <TextInput
                     style={stylesGlobal.input}
@@ -84,14 +91,15 @@ export default function Churrascometro() {
 
                 {MostrarResultado &&
                     <>
-                        <Text style={stylesGlobal.resultado}>Serão necessários {TotalCarne}Kg de Carne</Text>
-                        <Text style={stylesGlobal.resultado}>{QtdCarneHomens}Kg para Homens</Text>
-                        <Text style={stylesGlobal.resultado}>{QtdCarneMulheres}Kg para Mulheres</Text>
-                        <Text style={stylesGlobal.resultado}>{QtdCarneCriancas}Kg para Crianças</Text>
-                        <Text style={stylesGlobal.resultado}>Serão gastos {QtdSacosCarvao} saco(s) de carvão</Text>
+                        <Text style={stylesGlobal.resultado}>Serão necessários {TotalCarne}Kg de Carne, sendo:</Text>
+                        {QtdCarneHomens > 0 && <Text style={stylesGlobal.resultado}>{QtdCarneHomens}Kg para Homens</Text>}
+                        {QtdCarneMulheres > 0 && <Text style={stylesGlobal.resultado}>{QtdCarneMulheres}Kg para Mulheres</Text>}
+                        {QtdCarneCriancas > 0 && <Text style={stylesGlobal.resultado}>{QtdCarneCriancas}Kg para Crianças</Text>}
+                        {QtdSacosCarvao > 0 && <Text style={stylesGlobal.resultado}>Serão gastos {QtdSacosCarvao} saco(s) de carvão</Text>}
                     </>
                 }
-                {!CalculoCerto && <Text style={stylesGlobal.resultado}>Favor inserir os dados corretamente!</Text>}
+                {!CalculoCerto && <Text style={stylesGlobal.resultado}>Favor inserir os dados corretamente</Text>}
+                {SemValores && <Text style={stylesGlobal.resultado}>Sem valores para calcular</Text>}
             </ScrollView>
         </View>
     )
