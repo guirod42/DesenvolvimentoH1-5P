@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/core';
 
 import MyButton from '../../components/MyButton/';
 import LinkButton from '../../components/LinkButton/';
+import EntradaDados from '../../components/EntradaDados/';
 import colors from '../../styles/colors';
 import stylesGlobal from '../../styles/styles';
 
@@ -23,7 +24,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const eye = 'eye';
 const eyeOff = 'eye-off';
 
-export default function PaginaLogin() {
+export default function CadastroAluno() {
 
     const [flShowPass, setShowPass] = useState(false);
     const [iconPass, setIconPass] = useState(eye);
@@ -52,7 +53,7 @@ export default function PaginaLogin() {
         //  setLoading(true);
         if (txtLogin == "Gui" && txtSenha == "123") {
             await AsyncStorage.setItem('@nomeApp:userName', txtLogin);
-            navigation.navigate('CadastroAluno');
+            navigation.navigate('RolandoPagina');
         } else {
             alert('Usuario e/ou senha inválido!');
             return;
@@ -69,32 +70,16 @@ export default function PaginaLogin() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.textTitle}>Seja bem vindo!</Text>
-            <TextInput
-                style={stylesGlobal.textInput}
-                placeholder="Login"
-                onChangeText={text => setLogin(text)}
-                value={txtLogin}
-            />
+                <Text style={styles.textTitle}>Cadastro Aluno</Text>
             <View style={stylesGlobal.passwordContainer}>
-                <TextInput
-                    style={stylesGlobal.textInputPassword}
-                    placeholder="Senha"
-                    onChangeText={text => setSenha(text)}
-                    value={txtSenha}
-                    secureTextEntry={flShowPass}
-                />
 
-                <Feather
-                    style={stylesGlobal.iconEye}
-                    name={iconPass}
-                    size={28}
-                    color={colors.redButton}
-                    onPress={handleChangeIcon}
-                />
+            <EntradaDados title="Nome" subtitle="Nome completo" onPress={() => navigation.goBack()} />
+
+
+            
             </View>
             <MyButton title='Entrar' onPress={navigateToHome} />
-            <LinkButton title='Inscrever-se' onPress={navigateToNewUser} />
+
         </View>
     );
 }
@@ -104,7 +89,6 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colors.background,
         alignItems: 'center',
-        justifyContent: 'center',
     },
 
     textTitle: {

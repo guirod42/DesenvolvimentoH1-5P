@@ -43,20 +43,20 @@ export default function PaginaPrincipal() {
                 source={ImagemFundo}
                 style={stylesGlobal.fundoPagina}>
                 {!NovaImagem &&
-                    <View style={{ width: '95%' }}>
+                    <View style={{ width: '95%' , marginTop: 20, marginBottom: 15}}>
                         <BotaoMenu title='MENU' onPress={mostrarOpcoes} />
                     </View>
                 }
                 {ExibirOpcoes &&
                     <>
                         <ScrollView style={stylesGlobal.scrollView}>
-                            <BotaoMenu title='Churrascômetro' onPress={() => navigation.navigate('Churrascometro')} />
                             <BotaoMenu title='Login' onPress={() => navigation.navigate('PaginaLogin')} />
+                            <BotaoMenu title='Cadastro Aluno' onPress={() => navigation.navigate('CadastroAluno')} />
+                            <BotaoMenu title='Churrascômetro' onPress={() => navigation.navigate('Churrascometro')} />
                             <BotaoMenu title='Calculadora de IMC' onPress={() => navigation.navigate('CalculadoraIMC')} />
                             <BotaoMenu title='Conversão de Moedas' onPress={() => navigation.navigate('ConversaoMoeda')} />
                             <BotaoMenu title='Apresentação de Imagem' onPress={() => navigation.navigate('ApresentandoImagem')} />
                             <BotaoMenu title='Rolagem de página' onPress={() => navigation.navigate('RolandoPagina')} />
-                            <BotaoMenu title='Personagem Teste' onPress={() => navigation.navigate('PersonagemTeste')} />
                             <BotaoMenu title='Trocar Imagem' onPress={trocarFundo} />
                         </ScrollView>
                     </>

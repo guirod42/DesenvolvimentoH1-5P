@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
         padding: 0,
         width: '90%',
     },
-
+    
     label: {
         fontWeight: 'bold',
     },
@@ -174,7 +174,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         width: '70%',
         flexDirection: 'row',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        borderColor: 'blue'
     },
 
     resultado: {
@@ -212,15 +213,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
 
-    textInput: {
-        height: 40,
-        borderColor: colors.gray,
-        borderRadius: 8,
-        borderWidth: 1,
-        width: '70%',
-        marginBottom: 16,
-        paddingHorizontal: 8
-    },
 
     input: {
         height: 40,
@@ -232,12 +224,23 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginTop: 10,
     },
+    
+    textInput: {
+        height: 40,
+        borderColor: colors.gray,
+        borderRadius: 8,
+        borderWidth: 1,
+        width: '70%',
+        marginBottom: 16,
+        paddingHorizontal: 8
+    },
 
     textInputPassword: {
         height: 40,
-        borderWidth: 0,
-        width: '70%',
+        borderWidth: 1,
+        flex: 1,
         marginBottom: 16,
+        borderColor: 'red',
         paddingHorizontal: 8
     },
 

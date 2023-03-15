@@ -1,0 +1,63 @@
+{
+    "usuarios": [
+        {
+            "id": 1,
+            "nome": "João Silva",
+            "login": "joao.silva",
+            "password": "123456"
+        },
+        {
+            "id": 2,
+            "nome": "Maria Souza",
+            "login": "maria.souza",
+            "password": "senha123"
+        },
+        {
+            "id": 3,
+            "nome": "Pedro Santos",
+            "login": "pedro.santos",
+            "password": "qwerty"
+        },
+        {
+            "id": 4,
+            "nome": "Ana Oliveira",
+            "login": "ana.oliveira",
+            "password": "password123"
+        },
+        {
+            "id": 5,
+            "nome": "Lucas Costa",
+            "login": "lucas.costa",
+            "password": "abcd1234"
+        }
+    ],
+    
+    "pessoas": [
+        {
+            "nome": "João Silva",
+            "idade": 32,
+            "email": "joao.silva@example.com"
+        },
+        {
+            "nome": "Maria Souza",
+            "idade": 28,
+            "email": "maria.souza@example.com"
+        },
+        {
+            "nome": "Pedro Santos",
+            "idade": 45,
+            "email": "pedro.santos@example.com"
+        },
+        {
+            "nome": "Ana Oliveira",
+            "idade": 24,
+            "email": "ana.oliveira@example.com"
+        },
+        {
+            "nome": "Lucas Costa",
+            "idade": 37,
+            "email": "lucas.costa@example.com"
+        }
+    ]
+
+}
