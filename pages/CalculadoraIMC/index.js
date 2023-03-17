@@ -22,12 +22,12 @@ export default function CalculadoraIMC() {
     const [sexo, setSexo] = useState('');
 
     let tabelaIMC = [];
-    tabelaIMC[0] = {min: 0, max: 18.5, descricao: 'Abaixo do peso Normal', emoticon: '😫'}
-    tabelaIMC[1] = {min: 18.5, max: 24.9, descricao: 'Peso normal', emoticon: '😁'}
-    tabelaIMC[2] = {min: 24.9, max: 29.9, descricao: 'Excesso de peso', emoticon: '🤨'}
-    tabelaIMC[3] = {min: 29.9, max: 34.9, descricao: 'Obesidade Classe I', emoticon: '😶'}
-    tabelaIMC[4] = {min: 34.9, max: 39.9, descricao: 'Obesidade Classe II', emoticon: '🤐'}
-    tabelaIMC[5] = {min: 39.9, max: 99.9, descricao: 'Obesidade Classe III', emoticon: '😨'}
+    tabelaIMC[0] = { min: 0, max: 18.5, descricao: 'Abaixo do peso Normal', emoticon: '😫' }
+    tabelaIMC[1] = { min: 18.5, max: 24.9, descricao: 'Peso normal', emoticon: '😁' }
+    tabelaIMC[2] = { min: 24.9, max: 29.9, descricao: 'Excesso de peso', emoticon: '🤨' }
+    tabelaIMC[3] = { min: 29.9, max: 34.9, descricao: 'Obesidade Classe I', emoticon: '😶' }
+    tabelaIMC[4] = { min: 34.9, max: 39.9, descricao: 'Obesidade Classe II', emoticon: '🤐' }
+    tabelaIMC[5] = { min: 39.9, max: 99.9, descricao: 'Obesidade Classe III', emoticon: '😨' }
 
     function CalculaIMC() {
         const calculoIMC = peso / ((altura * altura));
@@ -60,7 +60,7 @@ export default function CalculadoraIMC() {
 
     return (
         <View style={styles.container}>
-            <Cabecalho title="Calculadora IMC" onPress={() => navigation.goBack()}/>
+            <Cabecalho title="Calculadora IMC" onPress={() => navigation.goBack()} />
             <ScrollView>
                 <View style={styles.centerPage}>
                     <View style={styles.inputContainer}>
@@ -82,14 +82,16 @@ export default function CalculadoraIMC() {
                             keyboardType="numeric"
                             onChangeText={(z) => setPeso(z)}
                         />
-                        <Picker style={styles.selecionaSexo}
-                            selectedValue={sexo}
-                            onValueChange={(itemValue, itemIndex) =>
-                                setSexo(itemValue)
-                            }>
-                            <Picker.Item label="Masculino" value="M" />
-                            <Picker.Item label="Feminino" value="F" />
-                        </Picker>
+                        <View style={styles.input}>
+                            <Picker style={styles.selecionaSexo}
+                                selectedValue={sexo}
+                                onValueChange={(itemValue, itemIndex) =>
+                                    setSexo(itemValue)
+                                }>
+                                <Picker.Item label="Masculino" value="M" />
+                                <Picker.Item label="Feminino" value="F" />
+                            </Picker>
+                        </View>
 
                         <TouchableOpacity style={styles.button} onPress={CalculaIMC}>
                             <Text style={styles.buttonText}>Calcular IMC</Text>

@@ -70,14 +70,20 @@ export default function CadastroAluno() {
 
     return (
         <View style={styles.container}>
-                <Text style={styles.textTitle}>Cadastro Aluno</Text>
-            <View style={stylesGlobal.passwordContainer}>
-
-            <EntradaDados title="Nome" subtitle="Nome completo" onPress={() => navigation.goBack()} />
-
-
-            
+            <Text style={styles.textTitle}>Cadastro Aluno</Text>
+            <View style={stylesGlobal.textInput}>
+                <EntradaDados title="Nome:" subtitle="Nome completo" onPress={() => navigation.goBack()} />
             </View>
+            <View style={stylesGlobal.textInput}>
+                <EntradaDados title="E-mail:" subtitle="E-mail" onPress={() => navigation.goBack()} />
+            </View>
+            <View style={stylesGlobal.textInput}>
+                <EntradaDados title="Senha:" subtitle="Senha" onPress={() => navigation.goBack()} />
+            </View>                      
+            <View style={stylesGlobal.textInput}>
+                <EntradaDados title="Confirmação de senha:" subtitle="Senha" onPress={() => navigation.goBack()} />
+            </View>
+
             <MyButton title='Entrar' onPress={navigateToHome} />
 
         </View>

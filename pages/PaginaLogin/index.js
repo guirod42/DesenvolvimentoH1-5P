@@ -25,8 +25,8 @@ const eyeOff = 'eye-off';
 
 export default function PaginaLogin() {
 
-    const [flShowPass, setShowPass] = useState(false);
-    const [iconPass, setIconPass] = useState(eye);
+    const [flShowPass, setShowPass] = useState(true);
+    const [iconPass, setIconPass] = useState(eyeOff);
     const [txtLogin, setLogin] = useState('')
     const [txtSenha, setSenha] = useState('')
     const navigation = useNavigation();
@@ -84,7 +84,7 @@ export default function PaginaLogin() {
                     value={txtSenha}
                     secureTextEntry={flShowPass}
                 />
-
+                
                 <Feather
                     style={stylesGlobal.iconEye}
                     name={iconPass}

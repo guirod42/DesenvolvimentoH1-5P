@@ -167,15 +167,31 @@ const styles = StyleSheet.create({
     },
 
     passwordContainer: {
-        marginBottom: 16,
-        height: 40,
-        borderColor: '#dcdce6',
+        borderColor: colors.gray,
         borderRadius: 8,
         borderWidth: 1,
-        width: '70%',
         flexDirection: 'row',
+        height: 40,
         justifyContent: 'center',
-        borderColor: 'blue'
+        marginBottom: 16,
+        width: '80%',
+    },
+    
+    textInput: {
+        height: 40,
+        borderColor: colors.red,
+        borderRadius: 8,
+        borderWidth: 1,
+        width: '80%',
+        marginBottom: 16,
+        paddingHorizontal: 8
+    },
+    
+    textInputPassword: {
+        height: 40,
+        flex: 1,        
+        marginBottom: 16,
+        paddingHorizontal: 8
     },
 
     resultado: {
@@ -225,24 +241,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     
-    textInput: {
-        height: 40,
-        borderColor: colors.gray,
-        borderRadius: 8,
-        borderWidth: 1,
-        width: '70%',
-        marginBottom: 16,
-        paddingHorizontal: 8
-    },
 
-    textInputPassword: {
-        height: 40,
-        borderWidth: 1,
-        flex: 1,
-        marginBottom: 16,
-        borderColor: 'red',
-        paddingHorizontal: 8
-    },
 
     textResult: {
         color: '#000',

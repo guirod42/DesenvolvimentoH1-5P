@@ -3,37 +3,34 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, ImageBackgr
 import { useNavigation } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons';
 import stylesGlobal from '../../styles/styles';
+import colors from '../../styles/colors'
 
 export default function EntradaDados(props) {
     const navigation = useNavigation();
     return (
         <View style={styles.textContainer}>
-            <Text>{props.title}</Text>
-            <TextInput
-                    placeholder={props.subtitle}
-                />
+            <Text style={styles.campoDescricao}>{props.title}</Text>
+            <TextInput style={styles.campoEntrada} placeholder={props.subtitle} />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    headerPrincipal: {
+    textContainer: {
+        height: 40,
+        marginBottom: 16,
+        width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
-        width: '100%',
-        paddingHorizontal: 10,
-    },
-    textContainer: {
-        marginBottom: 16,
-        height: 40,
-        borderColor: '#dcdce6',
-        borderRadius: 8,
-        borderWidth: 1,
-        width: '70%',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        borderColor: 'red'
     },
 
-
+    campoDescricao: {
+        textAlign: 'right',
+        marginLeft: 2
+    },
+    
+    campoEntrada: {
+        flex: 2,
+        marginLeft: 7
+    },
 })
