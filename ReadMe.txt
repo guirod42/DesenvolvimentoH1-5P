@@ -53,6 +53,9 @@ npx expo install react-native-safe-area-context@4.4.1
 npm install -g json-server
 npx yarn add axios
 
+Ícones para importar
+https://ionic.io/ionicons
+
 OUTROS ?
 npx expo install react-native-gesture-handler@~2.8.0
 npm i @react-native-async-storage/async-storage
