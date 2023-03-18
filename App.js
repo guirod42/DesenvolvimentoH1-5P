@@ -11,7 +11,7 @@ import ApresentandoImagem from './pages/ApresentarImagens';
 import RolandoPagina from './pages/RolandoPagina';
 import Churrascometro from './pages/Churrascometro';
 import PaginaLogin from './pages/PaginaLogin';
-import CadastroAluno from './pages/CadastroAluno';
+import CadastroPessoa from './pages/CadastroPessoa';
 
 const Stack = createStackNavigator();
 
@@ -26,7 +26,7 @@ export default function App() {
             <Stack.Screen name="ConversaoMoeda" component={ConversaoMoeda} />
             <Stack.Screen name="ApresentandoImagem" component={ApresentandoImagem} />
             <Stack.Screen name="RolandoPagina" component={RolandoPagina} />
-            <Stack.Screen name="CadastroAluno" component={CadastroAluno} />
+            <Stack.Screen name="CadastroPessoa" component={CadastroPessoa} />
           </Stack.Navigator>
         </NavigationContainer>
   );

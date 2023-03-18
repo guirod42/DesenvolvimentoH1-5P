@@ -51,7 +51,7 @@ export default function PaginaPrincipal() {
                     <>
                         <ScrollView style={stylesGlobal.scrollView}>
                             <BotaoMenu title='Login' onPress={() => navigation.navigate('PaginaLogin')} />
-                            <BotaoMenu title='Cadastro Aluno' onPress={() => navigation.navigate('CadastroAluno')} />
+                            <BotaoMenu title='Cadastro Pessoa' onPress={() => navigation.navigate('CadastroPessoa')} />
                             <BotaoMenu title='Churrascômetro' onPress={() => navigation.navigate('Churrascometro')} />
                             <BotaoMenu title='Calculadora de IMC' onPress={() => navigation.navigate('CalculadoraIMC')} />
                             <BotaoMenu title='Conversão de Moedas' onPress={() => navigation.navigate('ConversaoMoeda')} />

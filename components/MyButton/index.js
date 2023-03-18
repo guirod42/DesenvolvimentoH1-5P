@@ -7,7 +7,7 @@ import colors from '../../styles/colors';
 
 export default function MyButton(props) {
     return (
-        <RectButton style={styles.MyButtonStyle}   {...props}>
+        <RectButton style={{...styles.MyButtonStyle, backgroundColor: props.color}}{ ...props}>
             <Text style={styles.MyTextButtonStyle}>
                 {props.title}
             </Text>
@@ -16,8 +16,7 @@ export default function MyButton(props) {
 }
 
 const styles = StyleSheet.create({
-    MyButtonStyle: {
-        backgroundColor: colors.redButton,
+    MyButtonStyle: {        
         borderRadius: 8,
         height: 50,
         width: '70%',

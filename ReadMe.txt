@@ -68,7 +68,7 @@ npx yarn start
 •	Leitura do QR Code, aguarda o APP montar aplicação no celular
 
 dentro da pasta onde está o arquivo json, abrir o cmd e chamar o código
-json-server --host  10.107.197.214 --watch pessoas.json
+json-server --host  10.107.197.214 --watch arquivoDados.json
 
 o ip é o ipv4 do pc (ipconfig)
 

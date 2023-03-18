@@ -178,13 +178,13 @@ const styles = StyleSheet.create({
     },
     
     textInput: {
-        height: 40,
-        borderColor: colors.red,
+        borderColor: colors.gray,
         borderRadius: 8,
         borderWidth: 1,
-        width: '80%',
+        height: 40,
         marginBottom: 16,
-        paddingHorizontal: 8
+        paddingHorizontal: 8,
+        width: '80%',
     },
     
     textInputPassword: {
@@ -213,6 +213,18 @@ const styles = StyleSheet.create({
 
     selecionarMoeda: {
         minWidth: 200,
+    },    
+
+    selectType: {
+        alignItems: 'center',
+        borderColor: colors.gray,
+        borderRadius: 8,
+        borderWidth: 1,
+        flexDirection: 'row',
+        height: 40,
+        justifyContent: 'center',
+        marginBottom: 16,
+        width: '80%',
     },
 
     subtitle: {
@@ -241,7 +253,13 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     
-
+    textContainer: {
+        height: 40,
+        marginBottom: 16,
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
 
     textResult: {
         color: '#000',

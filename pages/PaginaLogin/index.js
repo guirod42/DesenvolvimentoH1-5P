@@ -9,14 +9,13 @@ import {
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/core';
-//import api from '../../Services/api';
+// import api from '../../apiService/'
+// import Loading from '../../Components/Loading/Loading';
 
 import MyButton from '../../components/MyButton/';
 import LinkButton from '../../components/LinkButton/';
 import colors from '../../styles/colors';
 import stylesGlobal from '../../styles/styles';
-
-//import Loading from '../../Components/Loading/Loading';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -39,29 +38,33 @@ export default function PaginaLogin() {
         setIconPass(icone);
     }
 
-    async function navigateToHome() {
-
-        if (txtLogin.trim() === '') {
+    function navigateToHome() {
+        if (txtLogin.trim() === '') {            
             alert('Campo login é obrigatório');
+            setLoading(false);
             return;
         }
+
         if (txtSenha.trim() === '') {
             alert('Campo senha é obrigatório');
+            setLoading(false);
             return;
         }
-        //  setLoading(true);
-        if (txtLogin == "Gui" && txtSenha == "123") {
-            await AsyncStorage.setItem('@nomeApp:userName', txtLogin);
-            navigation.navigate('CadastroAluno');
-        } else {
+    
+        if(txtLogin == "Gui" && txtSenha == "123"){            
+            navigation.navigate('RolandoPagina');
+        }
+        
+        else{
             alert('Usuario e/ou senha inválido!');
+            setLoading(false);
             return;
         }
         //  setLoading(false);
     }
 
     function navigateToNewUser() {
-        //navigation.navigate('NewUser'); -- navegar para página de novo usuário
+        navigation.navigate('CadastroPessoa');
     }
     /*if (flLoading) {
         return (<Loading />);
@@ -93,8 +96,8 @@ export default function PaginaLogin() {
                     onPress={handleChangeIcon}
                 />
             </View>
-            <MyButton title='Entrar' onPress={navigateToHome} />
-            <LinkButton title='Inscrever-se' onPress={navigateToNewUser} />
+            <MyButton title='Entrar' color={colors.blue} onPress={navigateToHome} />
+            <LinkButton title='Inscrever-se' onPress={() => navigation.navigate('CadastroPessoa')} />
         </View>
     );
 }

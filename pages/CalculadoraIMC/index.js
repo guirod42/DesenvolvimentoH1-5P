@@ -11,8 +11,8 @@ export default function CalculadoraIMC() {
     const navigation = useNavigation();
 
     const [idade, setIdade] = useState(0);
-    const [peso, setPeso] = useState(85);
-    const [altura, setAltura] = useState(1.8);
+    const [peso, setPeso] = useState(0);
+    const [altura, setAltura] = useState(0);
     const [resultado, setResultado] = useState('');
     const [emoticon, setEmoticon] = useState('');
     const [condicao, setCondicao] = useState('');

@@ -1,0 +1,1 @@
+json-server --host  10.107.197.214 --watch arquivoDados.json
