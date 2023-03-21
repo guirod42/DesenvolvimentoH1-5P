@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/core';
-//import api from '../../Services/api';
+import api from '../../apiService';
 
 import MyButton from '../../components/MyButton';
 import LinkButton from '../../components/LinkButton';
@@ -18,7 +18,7 @@ import colors from '../../styles/colors';
 import stylesGlobal from '../../styles/styles';
 
 //import Loading from '../../Components/Loading/Loading';
-
+import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const eye = 'eye';

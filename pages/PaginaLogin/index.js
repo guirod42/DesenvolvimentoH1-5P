@@ -3,29 +3,29 @@ import {
     TextInput,
     StyleSheet,
     Text,
-    View,
-    FlatList,
-    Alert
+    View
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/core';
-// import api from '../../apiService/'
-// import Loading from '../../Components/Loading/Loading';
+import { useNavigation } from '@react-navigation/native';
+import api from '../../apiService/api'
 
-import MyButton from '../../components/MyButton/';
-import LinkButton from '../../components/LinkButton/';
+import MyButton from '../../components/MyButton'
+import LinkButton from '../../components/LinkButton';
+
 import colors from '../../styles/colors';
-import stylesGlobal from '../../styles/styles';
+import Loading from '../../components/Loading/index';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import stylesGlobal from '../../styles/styles';
 
 const eye = 'eye';
 const eyeOff = 'eye-off';
 
-export default function PaginaLogin() {
 
-    const [flShowPass, setShowPass] = useState(true);
-    const [iconPass, setIconPass] = useState(eyeOff);
+export default function Login() {
+
+    const [flShowPass, setShowPass] = useState(false);
+    const [iconPass, setIconPass] = useState(eye);
     const [txtLogin, setLogin] = useState('')
     const [txtSenha, setSenha] = useState('')
     const navigation = useNavigation();
@@ -38,8 +38,9 @@ export default function PaginaLogin() {
         setIconPass(icone);
     }
 
-    function navigateToHome() {
-        if (txtLogin.trim() === '') {            
+    async function navigateToHome() {
+        setLoading(true);
+        if (txtLogin.trim() === '') {
             alert('Campo login é obrigatório');
             setLoading(false);
             return;
@@ -49,27 +50,26 @@ export default function PaginaLogin() {
             alert('Campo senha é obrigatório');
             setLoading(false);
             return;
-        }
+        }    
     
-        if(txtLogin == "Gui" && txtSenha == "123"){            
+        if(txtLogin == "Gui" && txtSenha == "123"){
+            await AsyncStorage.setItem('@nameApp:userName', txtLogin);         
             navigation.navigate('RolandoPagina');
-        }
-        
-        else{
+        } else {
             alert('Usuario e/ou senha inválido!');
             setLoading(false);
             return;
         }
-        //  setLoading(false);
+        setLoading(false);
     }
 
-    function navigateToNewUser() {
-        navigation.navigate('CadastroPessoa');
-    }
-    /*if (flLoading) {
+    if (flLoading) {
         return (<Loading />);
-    }*/
+    }
 
+    
+    
+    
     return (
         <View style={styles.container}>
             <Text style={styles.textTitle}>Seja bem vindo!</Text>
