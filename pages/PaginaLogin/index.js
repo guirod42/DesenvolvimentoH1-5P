@@ -30,6 +30,7 @@ export default function Login() {
     const [txtSenha, setSenha] = useState('')
     const navigation = useNavigation();
     const [flLoading, setLoading] = useState(false)
+    const [usuarios, setUsuarios] = useState([]);
 
     function handleChangeIcon() {
         let icone = iconPass == eye ? eyeOff : eye;
@@ -66,10 +67,24 @@ export default function Login() {
     if (flLoading) {
         return (<Loading />);
     }
+    
 
-    
-    
-    
+    /* TEEEESTEEEEE */
+
+    /*
+    async function fetchData() {
+        try {
+            const response = await api.get('/usuarios');
+            const data = await response.json();
+            const conversionData = data[`usuarios`];
+            const users = data.map(item => (item.id, item.nome, item.login, item.password))
+            return users;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    */
+ 
     return (
         <View style={styles.container}>
             <Text style={styles.textTitle}>Seja bem vindo!</Text>

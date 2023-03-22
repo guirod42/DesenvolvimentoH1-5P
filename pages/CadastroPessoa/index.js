@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/core';
-import api from '../../apiService';
+import api from '../../apiService/api.js';
 
 import MyButton from '../../components/MyButton';
 import LinkButton from '../../components/LinkButton';
@@ -39,6 +39,7 @@ export default function CadastroAluno() {
     const [buttonColor, setButtonColor] = useState(colors.blue);
     const toggleSwitch = () => setEhProfessor(previousState => !previousState);
     const [userType, setUserType] = useState('Aluno');
+    const [listErrors, setListErrors] = useState([]);
 
     /*
     function handleChangeIcon() {
@@ -59,44 +60,60 @@ export default function CadastroAluno() {
         
     }
 
-    function navigateToHome() {
+    function validarCadastro() {
+        let validacoes = [];
+        let cadastroValido = true;
+
         if (txtNome.trim() === '') {
-            alert('Campo nome é obrigatório');
+            validacoes.push('Campo nome é obrigatório');
+            cadastroValido = false;
             setLoading(false);
-            return;
         }
 
         if (txtEmail.trim() === '') {
-            alert('Campo e-mail é obrigatório');
+            validacoes.push('Campo e-mail é obrigatório');
+            cadastroValido = false;
             setLoading(false);
-            return;
         }
 
         if (txtUsuario.trim() === '') {
-            alert('Campo usuário é obrigatório');
+            validacoes.push('Campo usuário é obrigatório');
+            cadastroValido = false;
             setLoading(false);
-            return;
         }
 
         if (txtSenha.trim() === '') {
-            alert('Campo senha é obrigatório');
+            validacoes.push('Campo senha é obrigatório');
+            cadastroValido = false;
             setLoading(false);
-            return;
         }
 
         if (txtConfSenha.trim() === '') {
-            alert('Repita a senha no segundo campo');
+            validacoes.push('Repita a senha no segundo campo');
+            cadastroValido = false;
             setLoading(false);
-            return;
         }
 
         if (txtSenha.trim() != txtConfSenha) {
-            alert('Repita a mesma senha duas vezes');
+            validacoes.push('Repita a mesma senha duas vezes');
+            cadastroValido = false;
             setLoading(false);
+        }
+        setListErrors(validacoes);
+        return cadastroValido;
+    }
+
+    async function cadastrarPessoa(){
+        if(validarCadastro()){
+            let objNewPerson = {
+                nome: txtNome,
+                login: txtUsuario,
+                password: txtSenha
+            }
+            const response = await api.post('/usuarios',objNewPerson);
+            alert('Usuário Criado!');
             return;
         }
-        navigation.navigate('RolandoPagina');
-        //  setLoading(false);
     }
 
     function navigateToNewUser() {
@@ -170,7 +187,7 @@ export default function CadastroAluno() {
                 </View>
             </View>
 
-            <MyButton title={'Cadastrar ' + userType} color={buttonColor} onPress={navigateToHome} />
+            <MyButton title={'Cadastrar ' + userType} color={buttonColor} onPress={cadastrarPessoa} />
 
         </View>
     );

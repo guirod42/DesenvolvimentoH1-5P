@@ -1,1 +1,1 @@
-json-server --host  192.168.68.110 --watch arquivoDados.json
+json-server --host  10.107.197.214 --watch arquivoDados.json
