@@ -8,7 +8,7 @@ import colors from '../../styles/colors';
 export default function ProfilePicture(props) {
   return (
     <View style={styles.circle}>
-      <Image source={{uri: props.uri}} style={styles.image} />
+      <Image source={props.source} style={styles.image} />
     </View>
   );
 }

@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import styles from '../../styles/styles';
 import Cabecalho from '../../components/Cabecalho';
+import ProfilePicture from '../../components/ProfilePicture';
 
 export default function ApresentandoImagem() {
     const navigation = useNavigation();
@@ -26,7 +27,7 @@ export default function ApresentandoImagem() {
 
     return (
         <View style={styles.container}>
-            <Cabecalho title="Visualizar Imagem ou GIF" onPress={() => navigation.goBack()}/>
+            <Cabecalho title="Visualizar Imagem ou GIF" onPress={() => navigation.goBack()} />
             <View style={styles.centerPage}>
                 <View style={styles.inputContainer}>
                     <TouchableOpacity
@@ -42,25 +43,17 @@ export default function ApresentandoImagem() {
                         onPress={mostrarGIF}
                     >
                         <Text style={styles.buttonText}>
-                            {ExibirGIF ? 'Ocultar' : 'Mostrar'} GIF
+                            {ExibirGIF ? 'Ocultar ?' : 'Mostrar'} GIF
                         </Text>
                     </TouchableOpacity>
-                    {ExibirImagem && (
+                    {ExibirImagem &&
                         <View style={styles.imageContainer}>
-                            <Image
-                                source={SelectImage}
-                                resizeMode="contain"
-                                style={styles.image}
-                            />
+                            <ProfilePicture source={SelectImage} />
                         </View>
-                    )}
+                    }
                     {ExibirGIF && (
                         <View style={styles.imageContainer}>
-                            <Image
-                                source={SelectGit}
-                                resizeMode="contain"
-                                style={styles.image}
-                            />
+                            <ProfilePicture source={SelectGit} />
                         </View>
                     )}
                 </View>
