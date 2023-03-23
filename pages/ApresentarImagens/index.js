@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import styles from '../../styles/styles';
 import Cabecalho from '../../components/Cabecalho';
 import ProfilePicture from '../../components/ProfilePicture';
+import PersonBox from '../../components/PersonBox';
 
 export default function ApresentandoImagem() {
     const navigation = useNavigation();
@@ -48,7 +49,9 @@ export default function ApresentandoImagem() {
                     </TouchableOpacity>
                     {ExibirImagem &&
                         <View style={styles.imageContainer}>
-                            <ProfilePicture source={SelectImage} />
+                            <PersonBox picture = {SelectImage} title = {'Guilherme'}></PersonBox>
+                            <PersonBox picture = {SelectImage} title = {'Guilherme Silva Rodrigues'}></PersonBox>
+                            <PersonBox picture = {SelectImage} title = {'Guilherme Silva Rodrigues Silva Silva'}></PersonBox>
                         </View>
                     }
                     {ExibirGIF && (

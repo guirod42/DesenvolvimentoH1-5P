@@ -15,17 +15,17 @@ export default function ProfilePicture(props) {
 
 const styles = StyleSheet.create({
   circle: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 70,
+    height: 70,
+    borderRadius: 35,
     backgroundColor: '#CCC',
     justifyContent: 'center',
     alignItems: 'center'
   },
 
   image: {
-    width: 90,
-    height: 90,
-    borderRadius: 45
+    width: 70,
+    height: 70,
+    borderRadius: 35
   }
 });
