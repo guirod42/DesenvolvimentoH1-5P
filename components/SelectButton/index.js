@@ -20,14 +20,14 @@ const styles = StyleSheet.create({
     MyButtonStyle: {
         borderRadius: 8,
         height: 30,
-        width: 80,
+        width: 30,
         backgroundColor: colors.blue,
         justifyContent: 'center',
         alignItems: 'center',
     },
     MyTextButtonStyle: {
         color: '#FFF',
-        fontSize: 12,
+        fontSize: 18,
         fontWeight: 'bold'
     },
 });

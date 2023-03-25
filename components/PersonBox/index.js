@@ -12,18 +12,23 @@ export default function PersonBox(props) {
 
     return (
         <View style={styles.container}>
-            <View style={[styles.item, { width: '20%' }]} >
+            <View style={[styles.item, { flex: 0.25 }]} >
                 <ProfilePicture source={props.picture} />
             </View>
 
-            <View style={styles.ladoDireito}>
-                <View style={styles.item}>
-                    <Text>{props.title}</Text>
+            <View style={[styles.item, { flex: 0.65 }]} >
+                <View>
+                    <Text style={ styles.nameTitle }>{props.title}</Text>
                 </View>
+                <View>
+                    {props.subTitles.map((subTitle, index) => (
+                        <Text style={styles.subTitle} key={index}>{subTitle}</Text>
+                    ))}
+                </View>
+            </View>
 
-                <View style={styles.item}>
-                    <SelectButton title={'ESCOLHER'} onPress={() => navigation.navigate('RolandoPagina')} />
-                </View>
+            <View style={[styles.item, { flex: 0.10 }]} >
+                <SelectButton title={'+'} onPress={() => navigation.navigate('RolandoPagina')} />
             </View>
         </View >
     );
@@ -37,21 +42,23 @@ const styles = StyleSheet.create({
         borderColor: colors.black,
         borderWidth: 1,
         borderRadius: 8,
-        marginVertical: 5,
+        margin: 5,
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
 
     item: {
-        alignItems: 'center',
         padding: 5
     },
 
-    ladoDireito: {
-        flexWrap: 'wrap',
-        flexDirection: 'row',
-        width: '80%',
-        alignItems: 'center',
-        justifyContent: 'space-between'
+    nameTitle: {
+        textAlign: 'left',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    subTitle: {
+        marginLeft: 15,
+        fontSize: 12,
+        fontStyle: 'italic',
     }
 });

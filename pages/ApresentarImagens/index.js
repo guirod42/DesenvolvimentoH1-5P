@@ -49,9 +49,15 @@ export default function ApresentandoImagem() {
                     </TouchableOpacity>
                     {ExibirImagem &&
                         <View style={styles.imageContainer}>
-                            <PersonBox picture = {SelectImage} title = {'Guilherme'}></PersonBox>
-                            <PersonBox picture = {SelectImage} title = {'Guilherme Silva Rodrigues'}></PersonBox>
-                            <PersonBox picture = {SelectImage} title = {'Guilherme Silva Rodrigues Silva Silva'}></PersonBox>
+                            <PersonBox picture = {SelectImage} 
+                                title = {'Guilherme'}
+                                subTitles={['Subtitle 1', 'Subtitle 2']}></PersonBox>
+                            <PersonBox picture = {SelectImage} 
+                                title = {'Guilherme Silva Rodrigues'} 
+                                subTitles={['']}></PersonBox>
+                            <PersonBox picture = {SelectImage} 
+                                title = {'Guilherme Silva Rodrigues'}
+                                subTitles={['']}></PersonBox>
                         </View>
                     }
                     {ExibirGIF && (
