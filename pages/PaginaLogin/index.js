@@ -3,7 +3,8 @@ import {
     TextInput,
     StyleSheet,
     Text,
-    View
+    View,
+    Image
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -21,22 +22,37 @@ import stylesGlobal from '../../styles/styles';
 const eye = 'eye';
 const eyeOff = 'eye-off';
 
-
 export default function Login() {
-
-    const [flShowPass, setShowPass] = useState(false);
-    const [iconPass, setIconPass] = useState(eye);
+    const Logo = require('../../assets/images/Uniaraxa.png');
+    const [flShowPass, setShowPass] = useState(true);
+    const [iconPass, setIconPass] = useState(eyeOff);
     const [txtLogin, setLogin] = useState('')
     const [txtSenha, setSenha] = useState('')
     const navigation = useNavigation();
     const [flLoading, setLoading] = useState(false)
-    const [usuarios, setUsuarios] = useState([]);
+    const [listUsers, setUsers] = useState([]);
+    const [userFind, setUserFind] = useState('');
+
+    
 
     function handleChangeIcon() {
         let icone = iconPass == eye ? eyeOff : eye;
         let flShowPassAux = !flShowPass;
         setShowPass(flShowPassAux);
         setIconPass(icone);
+    }
+
+    async function loadUsers() {
+        await api.get('/usuarios').then((response) => {
+            setUsers(response.data);
+        }).catch(err => console.log(err));
+    }
+
+    async function searchUser() {
+        await loadUsers();
+        const filteredUsers = listUsers.filter((item) => item.login.includes(txtLogin));
+        setUserFind(filteredUsers);
+        return userFind && userFind.password.includes(txtSenha) ? true : false;
     }
 
     async function navigateToHome() {
@@ -51,43 +67,30 @@ export default function Login() {
             alert('Campo senha é obrigatório');
             setLoading(false);
             return;
-        }    
-    
-        if(txtLogin == "Gui" && txtSenha == "123"){
-            await AsyncStorage.setItem('@nameApp:userName', txtLogin);         
+        }        
+
+        if (searchUser()) {
+            await AsyncStorage.setItem('@nameApp:userName', txtLogin);
             navigation.navigate('RolandoPagina');
-        } else {
+        }
+
+        else {
             alert('Usuario e/ou senha inválido!');
             setLoading(false);
             return;
         }
+
         setLoading(false);
     }
 
     if (flLoading) {
         return (<Loading />);
     }
-    
 
-    /* TEEEESTEEEEE */
-
-    /*
-    async function fetchData() {
-        try {
-            const response = await api.get('/usuarios');
-            const data = await response.json();
-            const conversionData = data[`usuarios`];
-            const users = data.map(item => (item.id, item.nome, item.login, item.password))
-            return users;
-        } catch (error) {
-            console.error(error);
-        }
-    }
-    */
- 
     return (
         <View style={styles.container}>
-            <Text style={styles.textTitle}>Seja bem vindo!</Text>
+            <Image source={Logo} style={styles.image} />
+            <Text style={styles.textTitle}>Sistema de TCC</Text>
             <TextInput
                 style={stylesGlobal.textInput}
                 placeholder="Login"
@@ -102,7 +105,7 @@ export default function Login() {
                     value={txtSenha}
                     secureTextEntry={flShowPass}
                 />
-                
+
                 <Feather
                     style={stylesGlobal.iconEye}
                     name={iconPass}
@@ -122,12 +125,19 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colors.background,
         alignItems: 'center',
-        justifyContent: 'center',
     },
 
     textTitle: {
-        color: 'red',
+        color: colors.blue,
         fontSize: 28,
-        marginBottom: 8
+        marginBottom: 20,
+        fontWeight: 'bold',
     },
+
+    image: {
+        width: 200,
+        height: 200,
+        marginBottom: 35,
+        marginTop: 35
+      },
 });

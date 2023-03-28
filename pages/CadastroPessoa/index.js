@@ -26,8 +26,8 @@ const eyeOff = 'eye-off';
 
 export default function CadastroAluno() {
 
-    const [flShowPass, setShowPass] = useState(false);
-    const [iconPass, setIconPass] = useState(eye);
+    const [flShowPass, setShowPass] = useState(true);
+    const [iconPass, setIconPass] = useState(eyeOff);
     const [txtNome, setNome] = useState('');
     const [txtEmail, setEmail] = useState('');
     const [txtUsuario, setUsuario] = useState('');
@@ -36,28 +36,27 @@ export default function CadastroAluno() {
     const navigation = useNavigation();
     const [flLoading, setLoading] = useState(false);
     const [ehProfessor, setEhProfessor] = useState(false);
-    const [buttonColor, setButtonColor] = useState(colors.blue);
+    const [userColor, setUserColor] = useState(colors.blue);
     const toggleSwitch = () => setEhProfessor(previousState => !previousState);
     const [userType, setUserType] = useState('Aluno');
+    const [userLogin, setUserLogin] = useState('Matrícula (RA)');
     const [listErrors, setListErrors] = useState([]);
 
-    /*
     function handleChangeIcon() {
         let icone = iconPass == eye ? eyeOff : eye;
-        let flShowPassAux = !flShowPass;       
+        let flShowPassAux = !flShowPass;
         setShowPass(flShowPassAux);
-        setIconPass(icone);        
+        setIconPass(icone);
     }
-    */
 
     function selectType() {
-        
-        let tipo = userType == 'Professor' ? 'Aluno' : 'Professor';
-        let color = buttonColor == colors.blue ? colors.red : colors.blue;
+        let type = userType == 'Professor' ? 'Aluno' : 'Professor';
+        let login = userLogin == 'Usuário' ? 'Matrícula (RA)' : 'Usuário';
+        let color = userColor == colors.blue ? colors.green_dark : colors.blue;
         setEhProfessor(previousState => !previousState);
-        setUserType(tipo);
-        setButtonColor(color);
-        
+        setUserType(type);
+        setUserColor(color);
+        setUserLogin(login);
     }
 
     function validarCadastro() {
@@ -77,7 +76,7 @@ export default function CadastroAluno() {
         }
 
         if (txtUsuario.trim() === '') {
-            validacoes.push('Campo usuário é obrigatório');
+            validacoes.push('Campo ' + {userLogin} + 'é obrigatório');
             cadastroValido = false;
             setLoading(false);
         }
@@ -103,14 +102,14 @@ export default function CadastroAluno() {
         return cadastroValido;
     }
 
-    async function cadastrarPessoa(){
-        if(validarCadastro()){
+    async function cadastrarPessoa() {
+        if (validarCadastro()) {
             let objNewPerson = {
                 nome: txtNome,
                 login: txtUsuario,
                 password: txtSenha
             }
-            const response = await api.post('/usuarios',objNewPerson);
+            const response = await api.post('/usuarios', objNewPerson);
             alert('Usuário Criado!');
             return;
         }
@@ -125,14 +124,14 @@ export default function CadastroAluno() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.textTitle}>Cadastro {userType}</Text>
+            <Text style={[styles.textTitle, {color: userColor}]}>Cadastro {userType}</Text>
             <View style={[stylesGlobal.selectType, { marginBottom: 35 }]}>
                 <View style={{ flex: 0.3, alignItems: 'center' }}>
                     <Text>Aluno</Text>
                 </View>
                 <Switch
-                    trackColor={{ false: colors.cornflower_blue, true: colors.salmon }}
-                    thumbColor={ehProfessor ? colors.red : colors.blue}
+                    trackColor={{ false: colors.blue_light, true: colors.green_light }}
+                    thumbColor={ehProfessor ? colors.green_dark : colors.blue}
                     ios_backgroundColor="#3e3e3e"
                     onValueChange={selectType}
                     value={ehProfessor}
@@ -147,7 +146,8 @@ export default function CadastroAluno() {
                     <TextInput style={styles.campoEntrada}
                         placeholder='Nome completo'
                         onChangeText={x => setNome(x)}
-                        value={txtNome} />
+                        value={txtNome}
+                    />
                 </View>
             </View>
             <View style={stylesGlobal.textInput}>
@@ -156,16 +156,18 @@ export default function CadastroAluno() {
                     <TextInput style={styles.campoEntrada}
                         placeholder='E-mail'
                         onChangeText={text => setEmail(text)}
-                        value={txtEmail} />
+                        value={txtEmail}
+                    />
                 </View>
             </View>
             <View style={stylesGlobal.textInput}>
                 <View style={stylesGlobal.textContainer}>
-                    <Text style={styles.campoDescricao}>Usuário:</Text>
+                    <Text style={styles.campoDescricao}>{userLogin}:</Text>
                     <TextInput style={styles.campoEntrada}
-                        placeholder='Usuário'
+                        placeholder={userLogin}
                         onChangeText={text => setUsuario(text)}
-                        value={txtUsuario} />
+                        value={txtUsuario}
+                    />
                 </View>
             </View>
             <View style={stylesGlobal.textInput}>
@@ -174,7 +176,16 @@ export default function CadastroAluno() {
                     <TextInput style={styles.campoEntrada}
                         placeholder='Senha'
                         onChangeText={text => setSenha(text)}
-                        value={txtSenha} />
+                        value={txtSenha}
+                        secureTextEntry={flShowPass}
+                    />                    
+                    <Feather
+                        style={stylesGlobal.iconEye}
+                        name={iconPass}
+                        size={28}
+                        color={colors.redButton}
+                        onPress={handleChangeIcon}
+                    />
                 </View>
             </View>
             <View style={stylesGlobal.textInput}>
@@ -183,11 +194,20 @@ export default function CadastroAluno() {
                     <TextInput style={styles.campoEntrada}
                         placeholder='Confirmação de Senha'
                         onChangeText={text => setConfSenha(text)}
-                        value={txtConfSenha} />
+                        value={txtConfSenha}
+                        secureTextEntry={flShowPass}
+                    />
+                    <Feather
+                        style={stylesGlobal.iconEye}
+                        name={iconPass}
+                        size={28}
+                        color={colors.redButton}
+                        onPress={handleChangeIcon}
+                    />
                 </View>
             </View>
 
-            <MyButton title={'Cadastrar ' + userType} color={buttonColor} onPress={cadastrarPessoa} />
+            <MyButton title={'Cadastrar ' + userType} color={userColor} onPress={cadastrarPessoa} />
 
         </View>
     );
@@ -201,16 +221,16 @@ const styles = StyleSheet.create({
     },
 
     textTitle: {
-        color: colors.black,
         fontSize: 28,
-        marginBottom: 35
+        marginBottom: 20,
+        fontWeight: 'bold',
     },
 
     campoDescricao: {
         textAlign: 'right',
         marginLeft: 2
     },
-    
+
     campoEntrada: {
         flex: 2,
         marginLeft: 7
