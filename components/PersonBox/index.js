@@ -7,21 +7,21 @@ import colors from '../../styles/colors';
 import SelectButton from '../SelectButton'
 import { useNavigation } from '@react-navigation/native'
 
-export default function PersonBox(props) {
+export default function PersonBox(obj) {
     const navigation = useNavigation();
 
     return (
         <View style={styles.container}>
             <View style={[styles.item, { flex: 0.25 }]} >
-                <ProfilePicture source={props.picture} />
+                <ProfilePicture source={obj.picture} />
             </View>
 
             <View style={[styles.item, { flex: 0.65 }]} >
                 <View>
-                    <Text style={ styles.nameTitle }>{props.title}</Text>
+                    <Text style={ styles.nameTitle }>{obj.title}</Text>
                 </View>
                 <View>
-                    {props.subTitles.map((subTitle, index) => (
+                    {obj.subTitles.map((subTitle, index) => (
                         <Text style={styles.subTitle} key={index}>{subTitle}</Text>
                     ))}
                 </View>

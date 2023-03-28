@@ -53,11 +53,11 @@ export default function ApresentandoImagem() {
                                 title = {'Guilherme'}
                                 subTitles={['Subtitle 1', 'Subtitle 2']}></PersonBox>
                             <PersonBox picture = {SelectImage} 
-                                title = {'Guilherme Silva Rodrigues'} 
+                                title = {'Guilherme Silva Rodrigues SILVA SILVA SILVA'} 
                                 subTitles={['']}></PersonBox>
                             <PersonBox picture = {SelectImage} 
-                                title = {'Guilherme Silva Rodrigues'}
-                                subTitles={['']}></PersonBox>
+                                title = {'Guilherme Silva Rodrigues TESTE TESTE TESTE'}
+                                subTitles={['Subtitle 1','Subtitle 1','Subtitle 1', 'Subtitle 2']}></PersonBox>
                         </View>
                     }
                     {ExibirGIF && (
