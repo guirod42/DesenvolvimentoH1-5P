@@ -61,7 +61,7 @@ export default function ApresentandoImagem() {
                         </View>
                     }
                     {ExibirGIF && (
-                        <View style={styles.imageContainer}>
+                        <View style={styles.imageContainer}> 
                             <ProfilePicture source={SelectGit} />
                         </View>
                     )}

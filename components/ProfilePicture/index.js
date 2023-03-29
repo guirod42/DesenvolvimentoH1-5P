@@ -20,12 +20,12 @@ const styles = StyleSheet.create({
     borderRadius: 35,
     backgroundColor: '#CCC',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
 
   image: {
     width: 70,
     height: 70,
-    borderRadius: 35
+    borderRadius: 35,
   }
 });

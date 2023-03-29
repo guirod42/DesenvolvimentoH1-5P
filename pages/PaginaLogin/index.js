@@ -31,7 +31,7 @@ export default function Login() {
     const navigation = useNavigation();
     const [flLoading, setLoading] = useState(false)
     const [listUsers, setUsers] = useState([]);
-    const [userFind, setUserFind] = useState('');
+    const [userFind, setUserFind] = useState([]);
 
     function handleChangeIcon() {
         let icone = iconPass == eye ? eyeOff : eye;
@@ -48,9 +48,8 @@ export default function Login() {
 
     async function searchUser() {
         try {
-          
-            const response = await api.get(`/usuarios?login=${txtLogin}&password=${txtSenha}`);
-            if (response.data.length === 0) {
+            setUserFind = await api.get(`/usuarios?login=${txtLogin}&password=${txtSenha}`);
+            if (userFind.data.length === 0) {
                 alert('Deu ruim o usuário');
                 return false;
             } else {
@@ -62,90 +61,108 @@ export default function Login() {
             return { success: false, message: 'Ocorreu um erro ao buscar o usuário' };
         }
     }
-        /*
-            if(response.data == []){ 
-                return false;
-            } else {
-                return true;
-            }
-        }) // .catch(err => console.log(err));
-    }*/
+    /*
+        if(response.data == []){ 
+            return false;
+        } else {
+            return true;
+        }
+    }) // .catch(err => console.log(err));
+}*/
 
-        async function navigateToHome() {
-            setLoading(true);
-            if (txtLogin.trim() === '') {
-                alert('Campo login é obrigatório');
-                setLoading(false);
-                return;
-            }
-
-            if (txtSenha.trim() === '') {
-                alert('Campo senha é obrigatório');
-                setLoading(false);
-                return;
-            }
-
-            await searchUser() ? navigation.navigate('RolandoPagina') : alert('Usuário ou senha inválidos!');
-
-
+    async function navigateToHome() {
+        setLoading(true);
+        if (txtLogin.trim() === '') {
+            alert('Campo login é obrigatório');
             setLoading(false);
+            return;
         }
 
-        if (flLoading) {
-            return (<Loading />);
+        if (txtSenha.trim() === '') {
+            alert('Campo senha é obrigatório');
+            setLoading(false);
+            return;
         }
 
-        return (
-            <View style={styles.container}>
-                <Image source={Logo} style={styles.image} />
-                <Text style={styles.textTitle}>Sistema de TCC</Text>
-                <TextInput
-                    style={stylesGlobal.textInput}
-                    placeholder="Login"
-                    onChangeText={text => setLogin(text)}
-                    value={txtLogin}
-                />
-                <View style={stylesGlobal.passwordContainer}>
-                    <TextInput
-                        style={stylesGlobal.textInputPassword}
-                        placeholder="Senha"
-                        onChangeText={text => setSenha(text)}
-                        value={txtSenha}
-                        secureTextEntry={flShowPass}
-                    />
+        const exist = await searchUser()
+        if(exist)
+        {
+            if(userFind.Tipo === 1) {  // tipo aluno
+                // navegção pag do aluno
+            }
 
-                    <Feather
-                        style={stylesGlobal.iconEye}
-                        name={iconPass}
-                        size={28}
-                        color={colors.redButton}
-                        onPress={handleChangeIcon}
-                    />
-                </View>
-                <MyButton title='Entrar 2.0' color={colors.blue} onPress={navigateToHome} />
-                <LinkButton title='Inscrever-se' onPress={() => navigation.navigate('CadastroPessoa')} />
-            </View>
-        );
+            if(userFind.Tipo === 2) { // tipo professor
+                // navegção pag do aluno
+            }
+
+            else {
+                alert('Cadastro de usuário inválido!');
+                setLoading(false);
+                return;
+            }
+        }
+        else{
+            alert('Usuário ou senha inválidos!');
+            setLoading(false);
+            return;
+        }
     }
 
-    const styles = StyleSheet.create({
-        container: {
-            flex: 1,
-            backgroundColor: colors.background,
-            alignItems: 'center',
-        },
+    if (flLoading) {
+        return (<Loading />);
+    }
 
-        textTitle: {
-            color: colors.blue,
-            fontSize: 28,
-            marginBottom: 20,
-            fontWeight: 'bold',
-        },
+    return (
+        <View style={styles.container}>
+            <Image source={Logo} style={styles.image} />
+            <Text style={styles.textTitle}>Sistema de TCC</Text>
+            <TextInput
+                style={stylesGlobal.textInput}
+                placeholder="Login"
+                onChangeText={text => setLogin(text)}
+                value={txtLogin}
+            />
+            <View style={stylesGlobal.passwordContainer}>
+                <TextInput
+                    style={stylesGlobal.textInputPassword}
+                    placeholder="Senha"
+                    onChangeText={text => setSenha(text)}
+                    value={txtSenha}
+                    secureTextEntry={flShowPass}
+                />
 
-        image: {
-            width: 200,
-            height: 200,
-            marginBottom: 35,
-            marginTop: 35
-        },
-    });
+                <Feather
+                    style={stylesGlobal.iconEye}
+                    name={iconPass}
+                    size={28}
+                    color={colors.redButton}
+                    onPress={handleChangeIcon}
+                />
+            </View>
+            <MyButton title='Entrar 2.0' color={colors.blue} onPress={navigateToHome} />
+            <LinkButton title='Inscrever-se' onPress={() => navigation.navigate('CadastroPessoa')} />
+        </View>
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: colors.background,
+        alignItems: 'center',
+    },
+
+    textTitle: {
+        color: colors.blue,
+        fontSize: 28,
+        marginBottom: 20,
+        fontWeight: 'bold',
+    },
+
+    image: {
+        width: 200,
+        height: 200,
+        marginBottom: 35,
+        marginTop: 35
+    },
+});
