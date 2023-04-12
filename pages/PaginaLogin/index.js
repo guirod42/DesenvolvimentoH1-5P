@@ -26,12 +26,11 @@ export default function Login() {
     const Logo = require('../../assets/images/Uniaraxa.png');
     const [flShowPass, setShowPass] = useState(true);
     const [iconPass, setIconPass] = useState(eyeOff);
-    const [txtLogin, setLogin] = useState('')
-    const [txtSenha, setSenha] = useState('')
+    const [txtLogin, setLogin] = useState('Guilherme')
+    const [txtSenha, setSenha] = useState('123')
     const navigation = useNavigation();
     const [flLoading, setLoading] = useState(false)
-    const [listUsers, setUsers] = useState([]);
-    const [userFind, setUserFind] = useState([]);
+    const [userFind, setUserFind] = useState();
 
     function handleChangeIcon() {
         let icone = iconPass == eye ? eyeOff : eye;
@@ -40,37 +39,11 @@ export default function Login() {
         setIconPass(icone);
     }
 
-    /*async function loadUsers() {
-        await api.get(`usuarios?login=${txtlogin}`).then((response) => {
-            setUsers(response.data);
-        }).catch(err => console.log(err));
-    }*/
+    function troca() {
+        txtLogin === 'Guilherme' ? setLogin('Humberto') : setLogin('Guilherme');
+    }
 
     async function searchUser() {
-        try {
-            setUserFind = await api.get(`/usuarios?login=${txtLogin}&password=${txtSenha}`);
-            if (userFind.data.length === 0) {
-                alert('Deu ruim o usuário');
-                return false;
-            } else {
-                alert('Usuário ok');
-                return true;
-            }
-        } catch (error) {
-            alert(error);
-            return { success: false, message: 'Ocorreu um erro ao buscar o usuário' };
-        }
-    }
-    /*
-        if(response.data == []){ 
-            return false;
-        } else {
-            return true;
-        }
-    }) // .catch(err => console.log(err));
-}*/
-
-    async function navigateToHome() {
         setLoading(true);
         if (txtLogin.trim() === '') {
             alert('Campo login é obrigatório');
@@ -84,32 +57,45 @@ export default function Login() {
             return;
         }
 
-        const exist = await searchUser()
-        if(exist)
-        {
-            if(userFind.Tipo === 1) {  // tipo aluno
-                // navegção pag do aluno
-            }
+        let resposta = 0;
 
-            if(userFind.Tipo === 2) { // tipo professor
-                // navegção pag do aluno
-            }
+        await api.get(`/usuarios?login=${txtLogin}&password=${txtSenha}`).then((response) => {
+            resposta = response.data.length;
+            setUserFind(response.data[0]);
+            AsyncStorage.setItem('@nameApp:userName', txtLogin);
+            
+            const user = AsyncStorage.getItem('@nameApp:userName') || '';
+            alert(user);
 
-            else {
-                alert('Cadastro de usuário inválido!');
-                setLoading(false);
+            if (resposta == 0) {
+                alert('Usuario e/ou senha inválido!');
+                return;
+            } else {
+                alert(response.data[0].tipo);
+                try {
+                    if (response.data[0].tipo == 1) {
+                        alert('Tipo 1 - Aluno');
+                        navigation.navigate('RolandoPagina');
+                        return;
+                    }
+                    if (response.data[0].tipo == 2) {
+                        alert('Tipo 2 - Professor');
+                        navigation.navigate('ConversaoMoeda');
+                        return;
+                    }
+                    if (response.data[0].tipo == 42) {
+                        navigation.navigate('PaginaPrincipal');
+                        return;
+                    }
+                    alert('Não está achando o tipo');
+                    return;
+                }
+                catch (error) {
+                    console.error(error);
+                }
                 return;
             }
-        }
-        else{
-            alert('Usuário ou senha inválidos!');
-            setLoading(false);
-            return;
-        }
-    }
-
-    if (flLoading) {
-        return (<Loading />);
+        }).catch(err => alert(err));
     }
 
     return (
@@ -139,7 +125,8 @@ export default function Login() {
                     onPress={handleChangeIcon}
                 />
             </View>
-            <MyButton title='Entrar 2.0' color={colors.blue} onPress={navigateToHome} />
+            <MyButton title='Entrar' color={colors.blue} onPress={searchUser} />
+            <MyButton title='Troca' color={colors.gray} onPress={troca} />
             <LinkButton title='Inscrever-se' onPress={() => navigation.navigate('CadastroPessoa')} />
         </View>
     );
@@ -163,6 +150,6 @@ const styles = StyleSheet.create({
         width: 200,
         height: 200,
         marginBottom: 35,
-        marginTop: 35
-    },
+        marginTop: 35,
+    }
 });

@@ -4,7 +4,7 @@
     "id": 1,
     "nome": "Guilherme Silva Rodrigues",
     "email": "gui.silva.rodrigues@outlook.com.br",
-    "login": "Guilherme",
+    "login": "G1",
     "password": "123",
     "tipo": 1
   },
@@ -12,7 +12,7 @@
     "id": 2,
     "nome": "Humberto Melo",
     "email": "humbertomelo@uniaraxa.edu.br",
-    "login": "Humberto",
+    "login": "H1",
     "password": "123",
     "tipo": 2
   },
@@ -39,14 +39,6 @@
     "login": "josealves",
     "password": "abc123",
     "tipo": 1
-  },
-  {
-    "id": 6,
-    "nome": "Teste",
-    "email": "teste@teste.com",
-    "login": "42",
-    "password": "123",
-    "tipo": 42
   }
 ]
 }

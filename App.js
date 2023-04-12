@@ -19,8 +19,8 @@ export default function App() {
   return (
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen name="PaginaPrincipal" component={PaginaPrincipal} />
             <Stack.Screen name="PaginaLogin" component={PaginaLogin} />
+            <Stack.Screen name="PaginaPrincipal" component={PaginaPrincipal} />
 
             
             <Stack.Screen name="Churrascometro" component={Churrascometro} />

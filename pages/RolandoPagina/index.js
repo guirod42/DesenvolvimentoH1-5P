@@ -4,11 +4,10 @@ import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import styles from '../../styles/styles';
 import Cabecalho from '../../components/Cabecalho';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function RolandoPagina() {
-
     const navigation = useNavigation();
-
     return (
         <View style={styles.container}>
             <Cabecalho title="Epitáfio - Titãns" onPress={() => navigation.goBack()} />
