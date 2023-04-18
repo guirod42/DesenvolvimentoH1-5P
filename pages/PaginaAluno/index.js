@@ -7,8 +7,8 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import colors from '../../styles/colors';
+import Cabecalho from '../../components/CabecalhoProjeto';
 
 export default function Login() {
 
@@ -29,8 +29,8 @@ export default function Login() {
 
     return (
         <View style={styles.container}>
-            <Image source={Logo} style={styles.image} />
-            <Text style={styles.textTitle}>Página do Aluno {userName}</Text>
+            <Cabecalho title={"Bem-vindo(a) " + userName} onPress={() => navigation.goBack()} />
+            <Text style={styles.textTitle}>Página do Aluno</Text>
         </View>
     );
 }

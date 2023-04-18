@@ -47,29 +47,6 @@
       "login": "42",
       "password": "123",
       "tipo": 42
-    },
-    {
-      "nome": "Marco Antônio ",
-      "login": "042220",
-      "password": "123",
-      "tipo": 1,
-      "id": 7
-    },
-    {
-      "nome": "",
-      "login": "",
-      "password": "",
-      "email": "",
-      "tipo": "",
-      "id": 8
-    },
-    {
-      "nome": "Fkfkg",
-      "login": "",
-      "password": "",
-      "email": "",
-      "tipo": 2,
-      "id": 9
     }
   ]
 }

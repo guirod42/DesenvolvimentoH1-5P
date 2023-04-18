@@ -62,7 +62,6 @@ export default function Login() {
 
         await api.get(`/usuarios?login=${txtLogin}&password=${txtSenha}`).then((response) => {
             resposta = response.data.length;
-            
             if (resposta == 0) {
                 alert('Usuario e/ou senha inválido!');
                 return;
@@ -73,10 +72,12 @@ export default function Login() {
                         navigation.navigate('PaginaAluno');
                         return;
                     }
+
                     if (response.data[0].tipo == 2) {
                         navigation.navigate('PaginaProfessor');
                         return;
                     }
+
                     if (response.data[0].tipo == 42) {
                         navigation.navigate('PaginaPrincipal');
                         return;
@@ -110,7 +111,6 @@ export default function Login() {
                     value={txtSenha}
                     secureTextEntry={flShowPass}
                 />
-
                 <Feather
                     style={stylesGlobal.iconEye}
                     name={iconPass}

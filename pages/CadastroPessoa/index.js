@@ -7,6 +7,7 @@ import {
     Text,
     TextInput,
     View,
+    Image,
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/core';
@@ -25,7 +26,7 @@ const eye = 'eye';
 const eyeOff = 'eye-off';
 
 export default function CadastroAluno() {
-
+    const Logo = require('../../assets/images/Uniaraxa.png');
     const [flShowPass, setShowPass] = useState(true);
     const [iconPass, setIconPass] = useState(eyeOff);
     const [txtNome, setNome] = useState('');
@@ -62,7 +63,7 @@ export default function CadastroAluno() {
 
     function validarCadastro() {
         setLoading(true);
-        
+
         let validacoes = [];
         let cadastroValido = true;
 
@@ -100,27 +101,29 @@ export default function CadastroAluno() {
 
         setLoading(false);
         let objValidacao = {
-            cadastroValido : cadastroValido,
-            validacoes : validacoes
+            cadastroValido: cadastroValido,
+            validacoes: validacoes
 
-         };
+        };
         return objValidacao;
     }
 
     async function cadastrarPessoa() {
         let resultadoValidacao = validarCadastro();
 
-        if( .cadastroValido) {
+        if (resultadoValidacao.cadastroValido) {
             ehProfessor ? setTipo(1) : setTipo(2);
             let objNewPerson = {
+                id: null,
                 nome: txtNome,
+                email: txtEmail,
                 login: txtUsuario,
                 password: txtSenha,
-                email: txtEmail,
                 tipo: txtTipo
             }
             const response = await api.post('/usuarios', objNewPerson);
             alert('Usuário Criado!');
+            navigation.navigate('PaginaLogin');
             return;
         }
         else {
@@ -131,8 +134,20 @@ export default function CadastroAluno() {
         }
     }
 
+/*
+    {
+        "id": 1,
+        "nome": "Guilherme Silva Rodrigues",
+        "email": "gui.silva.rodrigues@outlook.com.br",
+        "login": "G1",
+        "password": "123",
+        "tipo": 1
+    },
+*/
+
     return (
         <View style={styles.container}>
+            <Image source={Logo} style={styles.image} />
             <Text style={[styles.textTitle, { color: userColor }]}>Cadastro {userType}</Text>
             <View style={[stylesGlobal.selectType, { marginBottom: 35 }]}>
                 <View style={{ flex: 0.3, alignItems: 'center' }}>
@@ -244,4 +259,11 @@ const styles = StyleSheet.create({
         flex: 2,
         marginLeft: 7
     },
+    
+    image: {
+        width: 150,
+        height: 150,
+        marginBottom: 35,
+        marginTop: 35,
+    }
 });
