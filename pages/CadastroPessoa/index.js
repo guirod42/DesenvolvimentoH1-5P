@@ -33,6 +33,7 @@ export default function CadastroAluno() {
     const [txtUsuario, setUsuario] = useState('');
     const [txtSenha, setSenha] = useState('');
     const [txtConfSenha, setConfSenha] = useState('');
+    const [txtTipo, setTipo] = useState('');
     const navigation = useNavigation();
     const [flLoading, setLoading] = useState(false);
     const [ehProfessor, setEhProfessor] = useState(false);
@@ -60,71 +61,79 @@ export default function CadastroAluno() {
     }
 
     function validarCadastro() {
+        setLoading(true);
+        
         let validacoes = [];
         let cadastroValido = true;
 
         if (txtNome.trim() === '') {
             validacoes.push('Campo nome é obrigatório');
             cadastroValido = false;
-            setLoading(false);
         }
 
         if (txtEmail.trim() === '') {
             validacoes.push('Campo e-mail é obrigatório');
             cadastroValido = false;
-            setLoading(false);
         }
 
         if (txtUsuario.trim() === '') {
-            validacoes.push('Campo ' + {userLogin} + 'é obrigatório');
+            validacoes.push('Campo ' + { userLogin } + 'é obrigatório');
             cadastroValido = false;
-            setLoading(false);
         }
 
         if (txtSenha.trim() === '') {
             validacoes.push('Campo senha é obrigatório');
             cadastroValido = false;
-            setLoading(false);
         }
 
         if (txtConfSenha.trim() === '') {
             validacoes.push('Repita a senha no segundo campo');
             cadastroValido = false;
-            setLoading(false);
         }
 
         if (txtSenha.trim() != txtConfSenha) {
             validacoes.push('Repita a mesma senha duas vezes');
             cadastroValido = false;
-            setLoading(false);
         }
+
         setListErrors(validacoes);
-        return cadastroValido;
+
+        setLoading(false);
+        let objValidacao = {
+            cadastroValido : cadastroValido,
+            validacoes : validacoes
+
+         };
+        return objValidacao;
     }
 
     async function cadastrarPessoa() {
-        if (validarCadastro()) {
+        let resultadoValidacao = validarCadastro();
+
+        if( .cadastroValido) {
+            ehProfessor ? setTipo(1) : setTipo(2);
             let objNewPerson = {
                 nome: txtNome,
                 login: txtUsuario,
-                password: txtSenha
+                password: txtSenha,
+                email: txtEmail,
+                tipo: txtTipo
             }
             const response = await api.post('/usuarios', objNewPerson);
             alert('Usuário Criado!');
             return;
         }
+        else {
+            resultadoValidacao.validacoes.forEach(item => {
+                alert(item);
+            });
+            return;
+        }
     }
-
-    function navigateToNewUser() {
-        //navigation.navigate('NewUser'); -- navegar para página de novo usuário
-    }
-    /*if (flLoading) {
-        return (<Loading />);
-    }*/
 
     return (
         <View style={styles.container}>
-            <Text style={[styles.textTitle, {color: userColor}]}>Cadastro {userType}</Text>
+            <Text style={[styles.textTitle, { color: userColor }]}>Cadastro {userType}</Text>
             <View style={[stylesGlobal.selectType, { marginBottom: 35 }]}>
                 <View style={{ flex: 0.3, alignItems: 'center' }}>
                     <Text>Aluno</Text>
@@ -178,7 +187,7 @@ export default function CadastroAluno() {
                         onChangeText={text => setSenha(text)}
                         value={txtSenha}
                         secureTextEntry={flShowPass}
-                    />                    
+                    />
                     <Feather
                         style={stylesGlobal.iconEye}
                         name={iconPass}

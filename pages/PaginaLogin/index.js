@@ -4,7 +4,8 @@ import {
     StyleSheet,
     Text,
     View,
-    Image
+    Image,
+    Alert
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -61,26 +62,19 @@ export default function Login() {
 
         await api.get(`/usuarios?login=${txtLogin}&password=${txtSenha}`).then((response) => {
             resposta = response.data.length;
-            setUserFind(response.data[0]);
-            AsyncStorage.setItem('@nameApp:userName', txtLogin);
             
-            const user = AsyncStorage.getItem('@nameApp:userName') || '';
-            alert(user);
-
             if (resposta == 0) {
                 alert('Usuario e/ou senha inválido!');
                 return;
             } else {
-                alert(response.data[0].tipo);
+                AsyncStorage.setItem('@SistemaTCC:userName', response.data[0].nome);
                 try {
                     if (response.data[0].tipo == 1) {
-                        alert('Tipo 1 - Aluno');
-                        navigation.navigate('RolandoPagina');
+                        navigation.navigate('PaginaAluno');
                         return;
                     }
                     if (response.data[0].tipo == 2) {
-                        alert('Tipo 2 - Professor');
-                        navigation.navigate('ConversaoMoeda');
+                        navigation.navigate('PaginaProfessor');
                         return;
                     }
                     if (response.data[0].tipo == 42) {
