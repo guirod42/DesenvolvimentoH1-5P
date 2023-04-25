@@ -132,7 +132,6 @@ const styles = StyleSheet.create({
 
     iconEye: {
         paddingHorizontal: 8,
-        marginTop: 6
     },
 
     image: {
@@ -274,7 +273,6 @@ const styles = StyleSheet.create({
         fontSize: 28,
         fontWeight: 'bold',
         textAlign: 'center',
-        backgroundColor: '#D3D3D3',
         borderColor: '#000',
     },
 

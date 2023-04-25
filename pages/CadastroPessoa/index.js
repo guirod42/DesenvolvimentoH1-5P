@@ -14,13 +14,8 @@ import { useNavigation } from '@react-navigation/core';
 import api from '../../apiService/api.js';
 
 import MyButton from '../../components/MyButton';
-import LinkButton from '../../components/LinkButton';
 import colors from '../../styles/colors';
 import stylesGlobal from '../../styles/styles';
-
-//import Loading from '../../Components/Loading/Loading';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const eye = 'eye';
 const eyeOff = 'eye-off';
@@ -34,15 +29,12 @@ export default function CadastroAluno() {
     const [txtUsuario, setUsuario] = useState('');
     const [txtSenha, setSenha] = useState('');
     const [txtConfSenha, setConfSenha] = useState('');
-    const [txtTipo, setTipo] = useState('');
     const navigation = useNavigation();
-    const [flLoading, setLoading] = useState(false);
     const [ehProfessor, setEhProfessor] = useState(false);
     const [userColor, setUserColor] = useState(colors.blue);
-    const toggleSwitch = () => setEhProfessor(previousState => !previousState);
     const [userType, setUserType] = useState('Aluno');
     const [userLogin, setUserLogin] = useState('Matrícula (RA)');
-    const [listErrors, setListErrors] = useState([]);
+    const [txtTipo, setTipo] = useState('1');
 
     function handleChangeIcon() {
         let icone = iconPass == eye ? eyeOff : eye;
@@ -54,19 +46,18 @@ export default function CadastroAluno() {
     function selectType() {
         let type = userType == 'Professor' ? 'Aluno' : 'Professor';
         let login = userLogin == 'Usuário' ? 'Matrícula (RA)' : 'Usuário';
+        let tipo = txtTipo == '2' ? '1': '2'
         let color = userColor == colors.blue ? colors.green_dark : colors.blue;
         setEhProfessor(previousState => !previousState);
         setUserType(type);
         setUserColor(color);
         setUserLogin(login);
+        setTipo(tipo);
     }
 
     function validarCadastro() {
-        setLoading(true);
-
         let validacoes = [];
         let cadastroValido = true;
-
         if (txtNome.trim() === '') {
             validacoes.push('Campo nome é obrigatório');
             cadastroValido = false;
@@ -78,7 +69,7 @@ export default function CadastroAluno() {
         }
 
         if (txtUsuario.trim() === '') {
-            validacoes.push('Campo ' + { userLogin } + 'é obrigatório');
+            validacoes.push(`Campo ${userLogin} é obrigatório`);
             cadastroValido = false;
         }
 
@@ -97,22 +88,16 @@ export default function CadastroAluno() {
             cadastroValido = false;
         }
 
-        setListErrors(validacoes);
-
-        setLoading(false);
         let objValidacao = {
             cadastroValido: cadastroValido,
             validacoes: validacoes
-
         };
         return objValidacao;
     }
 
     async function cadastrarPessoa() {
         let resultadoValidacao = validarCadastro();
-
         if (resultadoValidacao.cadastroValido) {
-            ehProfessor ? setTipo(1) : setTipo(2);
             let objNewPerson = {
                 id: null,
                 nome: txtNome,
@@ -134,16 +119,16 @@ export default function CadastroAluno() {
         }
     }
 
-/*
-    {
-        "id": 1,
-        "nome": "Guilherme Silva Rodrigues",
-        "email": "gui.silva.rodrigues@outlook.com.br",
-        "login": "G1",
-        "password": "123",
-        "tipo": 1
-    },
-*/
+    /*
+        {
+            "id": 1,
+            "nome": "Guilherme Silva Rodrigues",
+            "email": "gui.silva.rodrigues@outlook.com.br",
+            "login": "G1",
+            "password": "123",
+            "tipo": 1
+        },
+    */
 
     return (
         <View style={styles.container}>
@@ -158,8 +143,7 @@ export default function CadastroAluno() {
                     thumbColor={ehProfessor ? colors.green_dark : colors.blue}
                     ios_backgroundColor="#3e3e3e"
                     onValueChange={selectType}
-                    value={ehProfessor}
-                />
+                    value={ehProfessor} />
                 <View style={{ flex: 0.3, alignItems: 'center' }}>
                     <Text>Professor</Text>
                 </View>
@@ -259,11 +243,11 @@ const styles = StyleSheet.create({
         flex: 2,
         marginLeft: 7
     },
-    
+
     image: {
         width: 150,
         height: 150,
-        marginBottom: 35,
-        marginTop: 35,
+        marginBottom: 10,
+        marginTop: 10,
     }
 });

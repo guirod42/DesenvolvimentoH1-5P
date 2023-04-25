@@ -44,7 +44,7 @@ export default function ApresentandoImagem() {
                         onPress={mostrarGIF}
                     >
                         <Text style={styles.buttonText}>
-                            {ExibirGIF ? 'Ocultar ?' : 'Mostrar'} GIF
+                            {ExibirGIF ? 'Ocultar' : 'Mostrar'} GIF
                         </Text>
                     </TouchableOpacity>
                     {ExibirImagem &&

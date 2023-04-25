@@ -8,9 +8,25 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function RolandoPagina() {
     const navigation = useNavigation();
+    const [userName, setUserName] = useState('');
+    const [userID, setUserID] = useState('');
+
+    async function loadData(){
+        const user = await AsyncStorage.getItem('@SistemaTCC:userName') || '';
+        const id = await AsyncStorage.getItem('@SistemaTCC:SelectProfessor') || '';
+        setUserID(id);
+        setUserName(user);
+    }
+    useEffect(
+        () => {
+            loadData();
+        },
+        []
+    );
     return (
         <View style={styles.container}>
-            <Cabecalho title="Epitáfio - Titãns" onPress={() => navigation.goBack()} />
+            <Cabecalho title={"Epitáfio - Titãns ? " + userID} onPress={() => navigation.goBack()} />
+            
             <ScrollView style={styles.scrollView}>
                 <Text style={[styles.text, { marginTop: 30 }]}>Devia ter amado mais</Text>
                 <Text style={styles.text}>Ter chorado mais</Text>

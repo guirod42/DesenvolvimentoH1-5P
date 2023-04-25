@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     TextInput,
     StyleSheet,
@@ -9,14 +9,10 @@ import {
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import api from '../../apiService/api'
-
-import MyButton from '../../components/MyButton'
+import api from '../../apiService/api';
+import MyButton from '../../components/MyButton';
 import LinkButton from '../../components/LinkButton';
-
 import colors from '../../styles/colors';
-import Loading from '../../components/Loading/index';
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import stylesGlobal from '../../styles/styles';
 
@@ -27,11 +23,9 @@ export default function Login() {
     const Logo = require('../../assets/images/Uniaraxa.png');
     const [flShowPass, setShowPass] = useState(true);
     const [iconPass, setIconPass] = useState(eyeOff);
-    const [txtLogin, setLogin] = useState('Guilherme')
-    const [txtSenha, setSenha] = useState('123')
+    const [txtLogin, setLogin] = useState('')
+    const [txtSenha, setSenha] = useState('')
     const navigation = useNavigation();
-    const [flLoading, setLoading] = useState(false)
-    const [userFind, setUserFind] = useState();
 
     function handleChangeIcon() {
         let icone = iconPass == eye ? eyeOff : eye;
@@ -41,20 +35,19 @@ export default function Login() {
     }
 
     function troca() {
-        txtLogin === 'Guilherme' ? setLogin('Humberto') : setLogin('Guilherme');
+        txtLogin === 'Guilherme'
+        ? (setLogin('Humberto'), setSenha('123'))
+        : (setLogin('Guilherme'), setSenha('12345'));
     }
 
     async function searchUser() {
-        setLoading(true);
         if (txtLogin.trim() === '') {
             alert('Campo login é obrigatório');
-            setLoading(false);
             return;
         }
 
         if (txtSenha.trim() === '') {
             alert('Campo senha é obrigatório');
-            setLoading(false);
             return;
         }
 
@@ -67,6 +60,7 @@ export default function Login() {
                 return;
             } else {
                 AsyncStorage.setItem('@SistemaTCC:userName', response.data[0].nome);
+                AsyncStorage.setItem('@SistemaTCC:userID', String(response.data[0].id));
                 try {
                     if (response.data[0].tipo == 1) {
                         navigation.navigate('PaginaAluno');
@@ -78,10 +72,6 @@ export default function Login() {
                         return;
                     }
 
-                    if (response.data[0].tipo == 42) {
-                        navigation.navigate('PaginaPrincipal');
-                        return;
-                    }
                     alert('Não está achando o tipo');
                     return;
                 }

@@ -7,16 +7,17 @@ import React, { useState, useEffect } from 'react';
 import colors from '../../styles/colors';
 import OptionButton from '../../Components/OptionButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import api from '../../ApiService/api';
+import api from '../../apiService/api';
 
 export default function userList() {
     const [userName, setUserName] = useState('');
-    const [userList, setuserList] = useState([]);
+    const [userList, setUserList] = useState([]);
 
     async function loadUsuarios() {
         await api.get('/usuarios').then((response) => {
-            setuserList(response.data);
+            setUserList(response.data);
         });
+        alert('OK');
     }
 
     async function loadStoreUserName() {

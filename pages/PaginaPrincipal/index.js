@@ -52,11 +52,17 @@ export default function PaginaPrincipal() {
                         <ScrollView style={stylesGlobal.scrollView}>
                             <BotaoMenu title='Login' onPress={() => navigation.navigate('PaginaLogin')} />
                             <BotaoMenu title='Cadastro Pessoa' onPress={() => navigation.navigate('CadastroPessoa')} />
+                            <BotaoMenu title='Cadastro Projeto TCC' onPress={() => navigation.navigate('CadastroProjetoTCC')} />
+                            <BotaoMenu title='Página Aluno' onPress={() => navigation.navigate('PaginaAluno')} />
+                            <BotaoMenu title='Página Professor' onPress={() => navigation.navigate('PaginaProfessor')} />
+                            
+                            {/*
                             <BotaoMenu title='Churrascômetro' onPress={() => navigation.navigate('Churrascometro')} />
                             <BotaoMenu title='Calculadora de IMC' onPress={() => navigation.navigate('CalculadoraIMC')} />
                             <BotaoMenu title='Conversão de Moedas' onPress={() => navigation.navigate('ConversaoMoeda')} />
                             <BotaoMenu title='Apresentação de Imagem' onPress={() => navigation.navigate('ApresentandoImagem')} />
                             <BotaoMenu title='Rolagem de página' onPress={() => navigation.navigate('RolandoPagina')} />
+                            */}
                             <BotaoMenu title='Trocar Imagem' onPress={trocarFundo} />
                         </ScrollView>
                     </>

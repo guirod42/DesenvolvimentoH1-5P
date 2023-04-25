@@ -4,14 +4,17 @@ import { useNavigation } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons';
 import stylesGlobal from '../../styles/styles';
 
-export default function CabecalhoProjeto(props) {
+export default function Cabecalho(props) {
     const navigation = useNavigation();
-    const Logo = require('../../assets/images/Uniaraxa.png');
     return (
         <View style={styles.headerPrincipal}>
             <View style={styles.iconWrapper}>
-                <Text style={stylesGlobal.titlePage}>{props.title}</Text>
-                <Image source={Logo} style={styles.image} />
+                <TouchableOpacity
+                    style={stylesGlobal.backButton}
+                    activeOpacity={0.6}
+                    onPress={() => navigation.goBack()}>
+                    <Ionicons name="arrow-back-circle-outline" size={30} color="black" />
+                </TouchableOpacity>
             </View>
             <View style={styles.titleWrapper}>
                 <Text style={stylesGlobal.titlePage}>{props.title}</Text>
@@ -37,10 +40,4 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    image: {
-        width: 20,
-        height: 20,
-        marginBottom: 0,
-        marginTop: 0,
-    }
 })

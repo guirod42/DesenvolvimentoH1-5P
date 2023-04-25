@@ -6,10 +6,16 @@ import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 import colors from '../../styles/colors';
 import SelectButton from '../SelectButton'
 import { useNavigation } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function PersonBox(obj) {
     const navigation = useNavigation();
-
+    
+    async function goToPage(ProfessorID){
+        await AsyncStorage.setItem('@SistemaTCC:SelectProfessor', String(ProfessorID));
+        navigation.navigate('RolandoPagina')
+    }
+    
     return (
         <View style={styles.container}>
             <View style={[styles.item, { flex: 0.25 }]} >
@@ -18,17 +24,12 @@ export default function PersonBox(obj) {
 
             <View style={[styles.item, { flex: 0.65 }]} >
                 <View>
-                    <Text style={ styles.nameTitle }>{obj.title}</Text>
-                </View>
-                <View>
-                    {obj.subTitles.map((subTitle, index) => (
-                        <Text style={styles.subTitle} key={index}>{subTitle}</Text>
-                    ))}
+                    <Text style={ styles.nameTitle }>{obj.nome}</Text>
                 </View>
             </View>
 
             <View style={[styles.item, { flex: 0.10 }]} >
-                <SelectButton title={'+'} onPress={() => navigation.navigate('RolandoPagina')} />
+                <SelectButton title='+' onPress={() => {goToPage(obj.id)}} />
             </View>
         </View >
     );
@@ -38,7 +39,7 @@ export default function PersonBox(obj) {
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        width: '100%',
+        width: '81%',
         borderColor: colors.black,
         borderWidth: 1,
         borderRadius: 8,

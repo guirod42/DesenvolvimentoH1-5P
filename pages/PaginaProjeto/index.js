@@ -14,18 +14,16 @@ import Pessoa from '../../components/PersonBox';
 import imgTeste from '../../assets/images/Druid.jpg';
 import api from '../../apiService/api';
 
-export default function Login() {
+export default function Projeto() {
 
     const [userName, setUserName] = useState('');
-    const [userID, setUserID] = useState('');
+    const [userID, setUserID] = useState('42');
+    const [professorNome, setProfessorNome] = useState('42');
     const [userList, setuserList] = useState([]);
     const navigation = useNavigation();
 
     async function loadStoreUserName() {
         const user = await AsyncStorage.getItem('@SistemaTCC:userName') || '';
-        const id = await AsyncStorage.getItem('@SistemaTCC:userID') || '';
-        setUserID(id);
-        setUserName(user);
     }
 
     async function loadProfessores() {
@@ -45,20 +43,7 @@ export default function Login() {
     return (
         <View style={styles.container}>
             <Cabecalho title={"Bem-vindo(a) " + userName} onPress={() => navigation.goBack()} />
-            <Text style={styles.textTitle}>{"Defina o professor"}</Text>
-            <FlatList
-                data={userList}
-                renderItem={({ item }) => (
-                    <Pessoa
-                        picture={imgTeste}
-                        nome={item.nome}
-                        id={item.id}
-                    />
-                )}
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={styles.itemJokeCSS}
-                keyExtractor={item => item.id}
-            />
+            <Text style={styles.textTitle}>{"Página do " + userName + " - ID " + userID}</Text>
             <Text style={styles.textTitle}>{"Fim de página"}</Text>
         </View>
     );
