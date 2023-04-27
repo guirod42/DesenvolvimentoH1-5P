@@ -23,8 +23,8 @@ export default function PaginaLogin() {
     const Logo = require('../../assets/images/Uniaraxa.png');
     const [flShowPass, setShowPass] = useState(true);
     const [iconPass, setIconPass] = useState(eyeOff);
-    const [txtLogin, setLogin] = useState('')
-    const [txtSenha, setSenha] = useState('')
+    const [txtLogin, setLogin] = useState('Guilherme')
+    const [txtSenha, setSenha] = useState('12345')
     const navigation = useNavigation();
 
     function handleChangeIcon() {
@@ -35,9 +35,15 @@ export default function PaginaLogin() {
     }
 
     function troca() {
-        txtLogin === 'Guilherme'
-            ? (setLogin('Carlos'), setSenha('12345'))
-            : (setLogin('Guilherme'), setSenha('12345'));
+        if(txtLogin === 'Guilherme'){
+            setLogin('Carlos'), setSenha('12345');
+        }
+        else if(txtLogin === 'Carlos'){
+            setLogin('Humberto'), setSenha('123');
+        }
+        else{
+            setLogin('Guilherme'), setSenha('12345');
+        }
     }
 
     async function searchUser() {

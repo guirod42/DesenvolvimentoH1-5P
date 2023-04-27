@@ -13,6 +13,7 @@ import Cabecalho from '../../components/CabecalhoProjeto';
 import Pessoa from '../../components/PersonBox';
 import imgTeste from '../../assets/images/Druid.jpg';
 import api from '../../apiService/api';
+import Tarefas from '../../components/Tarefas';
 
 export default function Projeto() {
     const navigation = useNavigation();
@@ -21,7 +22,8 @@ export default function Projeto() {
     const [userID, setUserID] = useState('');
     const [projectID, setProjectID] = useState('');
     const [professorID, setProfessorID] = useState('');
-    
+    const [toDoList, setToDoList] = useState([]);
+
     const [projectDescription, setProjectDescription] = useState('');
     const [professorNome, setProfessorNome] = useState('');
 
@@ -43,18 +45,38 @@ export default function Projeto() {
                 setProjectName(projectName);
                 setProfessorID(professorID);
                 setProjectDescription(projectDescription);
+
                 await api.get(`/usuarios?id=${professorID}`).then(
                     async (response) => {
                         const data = response.data;
                         const professorNome = data[0].nome;
                         setProfessorNome(professorNome);
                     }
-                )                
-            })
-            .catch(err => console.log(err));
+                )
+
+                await api.get(`/tarefas?ProjetoID=${projectId}`).then(
+                    async (response) => {
+                        alert(response.data.length);
+                        setToDoList(response.data);
+                    }
+                ).catch(err => console.log(err));
+
+            }).catch(err => console.log(err));
         setUserName(userName);
         setUserID(userID);
     }
+    const noResultsComponent = (
+        <View style={[styles.item, { justifyContent: 'center', height: 50 }]}>
+            <Text style={{ fontStyle: 'italic' }}>Nenhuma tarefa nova</Text>
+        </View>
+    );
+
+    const renderItem = ({ item }) => (
+        <Tarefas
+            titulo={String(item.Titulo)}
+            descricao={String(item.Descricao)}
+        />
+    );
 
     useEffect(
         () => {
@@ -69,6 +91,19 @@ export default function Projeto() {
             <Text style={styles.textTitle}>{"Projeto: " + projectName}</Text>
             <Text style={styles.textTitle}>{"Descricao: " + projectDescription}</Text>
             <Text style={styles.textTitle}>{"Orientador: " + professorNome}</Text>
+
+            {toDoList.length > 0 ? (
+                <FlatList
+                    data={toDoList}
+                    renderItem={renderItem}
+                    //showsVerticalScrollIndicator={false}
+                    contentContainerStyle={styles.flatList}
+                    keyExtractor={item => item.id}
+                />
+            ) : (
+                noResultsComponent
+            )}
+
         </View>
     );
 }

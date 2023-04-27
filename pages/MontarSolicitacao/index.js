@@ -5,6 +5,7 @@ import {
     View,
     TextInput,
     KeyboardAvoidingView,
+    Platform
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -12,10 +13,19 @@ import colors from '../../styles/colors';
 import Cabecalho from '../../components/CabecalhoProjeto';
 import MyButton from '../../components/MyButton';
 import api from '../../apiService/api.js';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function MontarSolicitacao() {
     const navigation = useNavigation();
-
+    const mainTask = ([
+        {
+            Titulo: 'Definir tema do TCC',
+            Descricao: "É preciso definir o tema do Projeto de TCC"
+        },
+        {
+            Titulo: 'Definir metodologia',
+            Descricao: "Qual metodologia será utilizada na realização do TCC"
+        }])
     const [userName, setUserName] = useState('');
     const [userID, setUserID] = useState('');
     const [professorID, setProfessorID] = useState('');
@@ -55,7 +65,7 @@ export default function MontarSolicitacao() {
 
         return objValidacao;
     }
-    
+
     async function cadastrarSolicitacao() {
         let resultadoValidacao = validarCadastro();
         if (resultadoValidacao.cadastroValido) {
@@ -66,7 +76,22 @@ export default function MontarSolicitacao() {
                 NomeProjeto: title,
                 Descricao: description,
             }
-            const response = api.post('/solicitacoes', objNewRequest);
+            api.post('/solicitacoes', objNewRequest);
+
+            await api.get(`/solicitacoes?AlunoSolicitanteID=${userID}`).then(
+                async (response) => {
+                    const newTasks = mainTask.map((item, index) => ({
+                        id: null,
+                        ProjetoID: response.data[0].id,
+                        ProfessorOrientadorID: professorID,
+                        Titulo: item.Titulo,
+                        Descricao: item.Descricao,
+                    }));
+
+                    newTasks.forEach((objNewTask) => {
+                        const response = api.post('/tarefas', objNewTask);
+                    });
+                }).catch(err => console.log(err));
             alert('Solicitação enviada');
             navigation.navigate('PaginaProjeto');
             return;
@@ -79,7 +104,6 @@ export default function MontarSolicitacao() {
         }
     }
 
-
     useEffect(
         () => {
             loadStoreUserName();
@@ -90,14 +114,17 @@ export default function MontarSolicitacao() {
     return (
         <View style={styles.container}>
             <Cabecalho title={"Bem-vindo(a) " + userName} onPress={() => navigation.goBack()} />
+
             <Text style={styles.textTitle}>{"Defina os detalhes da sua solicitação"}</Text>
             <Text style={styles.subtag}>Dê um título para sua proposta de TCC</Text>
             <TextInput
                 style={styles.titleImput}
-                placeholder="Titulo do proposta"
+
+                placeholder="Titulo da proposta"
                 onChangeText={text => setTitle(text)}
                 value={title}
             />
+
             <Text style={styles.subtag}>Descrição do projeto</Text>
             <TextInput
                 style={styles.textInput}
@@ -105,6 +132,7 @@ export default function MontarSolicitacao() {
                 onChangeText={text => setDescription(text)}
                 value={description}
             />
+
             <MyButton title='Realizar solicitação ?' color={colors.green} onPress={cadastrarSolicitacao} />
         </View>
     );
@@ -125,21 +153,19 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
 
+    subtag: {
+        color: colors.black,
+        fontSize: 18,
+        marginBottom: 20,
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
+
     image: {
         width: 200,
         height: 200,
         marginBottom: 35,
         marginTop: 35,
-    },
-
-    textInput: {
-        borderColor: colors.gray,
-        height: 200,
-        borderRadius: 8,
-        borderWidth: 1,
-        marginBottom: 16,
-        paddingHorizontal: 8,
-        width: '80%',
     },
 
     titleImput: {
@@ -152,6 +178,16 @@ const styles = StyleSheet.create({
         width: '80%',
     },
 
+    textInput: {
+        borderColor: colors.gray,
+        height: 30,
+        borderRadius: 8,
+        borderWidth: 1,
+        marginBottom: 16,
+        paddingHorizontal: 8,
+        width: '80%',
+        flex: 1
+    },
 
     input: {
         height: 50,
@@ -159,8 +195,7 @@ const styles = StyleSheet.create({
         width: '100%',
         marginBottom: 16,
         paddingHorizontal: 8,
-        // borderColor: colors.white,
-        color: colors.blackSpace,
+        color: colors.black,
         backgroundColor: colors.white,
         borderRadius: 8,
         fontSize: 16
@@ -172,8 +207,7 @@ const styles = StyleSheet.create({
         width: '100%',
         marginBottom: 16,
         paddingHorizontal: 8,
-        // borderColor: colors.white,
-        color: colors.blackSpace,
+        color: colors.black,
         backgroundColor: colors.white,
         borderRadius: 8,
         fontSize: 16,
