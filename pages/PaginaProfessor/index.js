@@ -60,7 +60,6 @@ export default function Login() {
                 <FlatList
                     data={projectList}
                     renderItem={renderItem}
-                    //showsVerticalScrollIndicator={false}
                     contentContainerStyle={styles.flatList}
                     keyExtractor={item => item.id}
                 />

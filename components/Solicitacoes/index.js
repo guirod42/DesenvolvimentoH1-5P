@@ -16,13 +16,14 @@ export default function Solicitacoes(obj) {
 
 const styles = StyleSheet.create({
     caixa: {
-        backgroundColor: colors.wheat,
+        backgroundColor: colors.light_green,
         width: '100%',
         borderRadius: 10,
         borderWidth: 1,
         padding: 10,
         alignItems: 'center',
         justifyContent: 'center',
+        marginBottom: 10,
       },
 
     nameTitle: {

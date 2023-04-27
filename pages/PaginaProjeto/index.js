@@ -56,7 +56,6 @@ export default function Projeto() {
 
                 await api.get(`/tarefas?ProjetoID=${projectId}`).then(
                     async (response) => {
-                        alert(response.data.length);
                         setToDoList(response.data);
                     }
                 ).catch(err => console.log(err));

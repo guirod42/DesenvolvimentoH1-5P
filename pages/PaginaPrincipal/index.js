@@ -8,7 +8,6 @@ import BotaoMenu from '../../components/BotaoMenu';
 import colors from '../../styles/colors';
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 
-
 export default function PaginaPrincipal() {
 
     const navigation = useNavigation();
