@@ -4,10 +4,10 @@ import {
     FlatList
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import colors from '../../styles/colors';
+import colors from '../../../styles/colors';
 import OptionButton from '../../Components/OptionButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import api from '../../apiService/api';
+import api from '../../../apiService/api';
 
 export default function userList() {
     const [userName, setUserName] = useState('');

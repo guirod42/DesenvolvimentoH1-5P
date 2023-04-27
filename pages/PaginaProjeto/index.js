@@ -15,27 +15,50 @@ import imgTeste from '../../assets/images/Druid.jpg';
 import api from '../../apiService/api';
 
 export default function Projeto() {
-
-    const [userName, setUserName] = useState('');
-    const [userID, setUserID] = useState('42');
-    const [professorNome, setProfessorNome] = useState('42');
-    const [userList, setuserList] = useState([]);
     const navigation = useNavigation();
 
-    async function loadStoreUserName() {
-        const user = await AsyncStorage.getItem('@SistemaTCC:userName') || '';
-    }
+    const [userName, setUserName] = useState('');
+    const [userID, setUserID] = useState('');
+    const [projectID, setProjectID] = useState('');
+    const [professorID, setProfessorID] = useState('');
+    
+    const [projectDescription, setProjectDescription] = useState('');
+    const [professorNome, setProfessorNome] = useState('');
 
-    async function loadProfessores() {
-        await api.get('/usuarios?tipo=2').then((response) => {
-            setuserList(response.data);
-        }).catch(err => console.log(err));
+    const [projectName, setProjectName] = useState('');
+
+
+    async function loadData() {
+        const userName = await AsyncStorage.getItem('@SistemaTCC:userName') || '';
+        const userID = await AsyncStorage.getItem('@SistemaTCC:userID') || '';
+        await api.get('/solicitacoes?AlunoSolicitanteID=' + userID).then(
+            async (response) => {
+                const data = response.data;
+                const projectId = data[0].id;
+                const projectName = data[0].NomeProjeto;
+                const projectDescription = data[0].Descricao;
+                const professorID = data[0].ProfessorOrientadorID;
+
+                setProjectID(projectId);
+                setProjectName(projectName);
+                setProfessorID(professorID);
+                setProjectDescription(projectDescription);
+                await api.get(`/usuarios?id=${professorID}`).then(
+                    async (response) => {
+                        const data = response.data;
+                        const professorNome = data[0].nome;
+                        setProfessorNome(professorNome);
+                    }
+                )                
+            })
+            .catch(err => console.log(err));
+        setUserName(userName);
+        setUserID(userID);
     }
 
     useEffect(
         () => {
-            loadStoreUserName();
-            loadProfessores();
+            loadData();
         },
         []
     );
@@ -43,8 +66,9 @@ export default function Projeto() {
     return (
         <View style={styles.container}>
             <Cabecalho title={"Bem-vindo(a) " + userName} onPress={() => navigation.goBack()} />
-            <Text style={styles.textTitle}>{"Página do " + userName + " - ID " + userID}</Text>
-            <Text style={styles.textTitle}>{"Fim de página"}</Text>
+            <Text style={styles.textTitle}>{"Projeto: " + projectName}</Text>
+            <Text style={styles.textTitle}>{"Descricao: " + projectDescription}</Text>
+            <Text style={styles.textTitle}>{"Orientador: " + professorNome}</Text>
         </View>
     );
 }
@@ -70,12 +94,4 @@ const styles = StyleSheet.create({
         marginBottom: 35,
         marginTop: 35,
     },
-
-    jokeListCss: {
-
-    },
-
-    itemJokeCSS: {
-
-    }
 });

@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
     },
 
     iconEye: {
+        marginTop: 5,
         paddingHorizontal: 8,
     },
 

@@ -10,16 +10,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function PersonBox(obj) {
     const navigation = useNavigation();
-    
-    async function goToPage(ProfessorID){
-        await AsyncStorage.setItem('@SistemaTCC:SelectProfessor', String(ProfessorID));
-        navigation.navigate('RolandoPagina')
+    const image = obj.img;
+    async function goToPage(professor){
+        const {id , nome} = professor;
+        await AsyncStorage.setItem('@SistemaTCC:professorID', String(id));
+        await AsyncStorage.setItem('@SistemaTCC:professorName', String(nome));
+        navigation.navigate('MontarSolicitacao');
     }
     
     return (
         <View style={styles.container}>
             <View style={[styles.item, { flex: 0.25 }]} >
-                <ProfilePicture source={obj.picture} />
+                <ProfilePicture img={image} />
             </View>
 
             <View style={[styles.item, { flex: 0.65 }]} >
@@ -29,7 +31,7 @@ export default function PersonBox(obj) {
             </View>
 
             <View style={[styles.item, { flex: 0.10 }]} >
-                <SelectButton title='+' onPress={() => {goToPage(obj.id)}} />
+                <SelectButton title='+' onPress={() => {goToPage({id: obj.id, nome: obj.nome})}} />
             </View>
         </View >
     );
@@ -39,7 +41,7 @@ export default function PersonBox(obj) {
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        width: '81%',
+        width: '80%',
         borderColor: colors.black,
         borderWidth: 1,
         borderRadius: 8,

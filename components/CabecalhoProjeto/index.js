@@ -23,7 +23,7 @@ export default function CabecalhoProjeto(props) {
 
     return (
         <View style={styles.headerPrincipal}>
-            <View style={styles.iconWrapper}>                
+            <View style={styles.iconWrapper}>
                 <Image source={Logo} style={styles.image} />
             </View>
             <View style={styles.titleWrapper}>

@@ -19,7 +19,7 @@ import stylesGlobal from '../../styles/styles';
 const eye = 'eye';
 const eyeOff = 'eye-off';
 
-export default function Login() {
+export default function PaginaLogin() {
     const Logo = require('../../assets/images/Uniaraxa.png');
     const [flShowPass, setShowPass] = useState(true);
     const [iconPass, setIconPass] = useState(eyeOff);
@@ -36,8 +36,8 @@ export default function Login() {
 
     function troca() {
         txtLogin === 'Guilherme'
-        ? (setLogin('Humberto'), setSenha('123'))
-        : (setLogin('Guilherme'), setSenha('12345'));
+            ? (setLogin('Carlos'), setSenha('12345'))
+            : (setLogin('Guilherme'), setSenha('12345'));
     }
 
     async function searchUser() {
@@ -45,7 +45,6 @@ export default function Login() {
             alert('Campo login é obrigatório');
             return;
         }
-
         if (txtSenha.trim() === '') {
             alert('Campo senha é obrigatório');
             return;
@@ -53,40 +52,46 @@ export default function Login() {
 
         let resposta = 0;
 
-        await api.get(`/usuarios?login=${txtLogin}&password=${txtSenha}`).then((response) => {
-            resposta = response.data.length;
-            if (resposta == 0) {
-                alert('Usuario e/ou senha inválido!');
-                return;
-            } else {
-                AsyncStorage.setItem('@SistemaTCC:userName', response.data[0].nome);
-                AsyncStorage.setItem('@SistemaTCC:userID', String(response.data[0].id));
-                try {
-                    if (response.data[0].tipo == 1) {
-                        navigation.navigate('PaginaAluno');
+        await api.get(`/usuarios?login=${txtLogin}&password=${txtSenha}`).then(
+            async (response) => {
+                resposta = response.data.length;
+                if (resposta == 0) {
+                    alert('Usuario e/ou senha inválido!');
+                    return;
+                } else {
+                    await AsyncStorage.setItem('@SistemaTCC:userName', response.data[0].nome);
+                    await AsyncStorage.setItem('@SistemaTCC:userID', String(response.data[0].id));
+                    try {
+                        if (response.data[0].tipo == 1) {
+                            await api.get("/solicitacoes?AlunoSolicitanteID=" + response.data[0].id).then(async (response) => {
+                                if (response.data.length > 0) {
+                                    navigation.navigate('PaginaProjeto');
+                                    return;
+                                }
+                                navigation.navigate('PaginaAluno');
+                                return;
+                            }).catch(err => console.log(err));
+                            return;
+                        }
+                        if (response.data[0].tipo == 2) {
+                            navigation.navigate('PaginaProfessor');
+                            return;
+                        }
+                        alert('Não está achando o tipo');
                         return;
                     }
-
-                    if (response.data[0].tipo == 2) {
-                        navigation.navigate('PaginaProfessor');
-                        return;
+                    catch (error) {
+                        console.error(error);
                     }
-
-                    alert('Não está achando o tipo');
                     return;
                 }
-                catch (error) {
-                    console.error(error);
-                }
-                return;
-            }
-        }).catch(err => alert(err));
+            }).catch(err => alert(err));
     }
 
     return (
         <View style={styles.container}>
             <Image source={Logo} style={styles.image} />
-            <Text style={styles.textTitle}>Sistema de TCC</Text>
+            <Text style={styles.textTitle}>Sistema TCC</Text>
             <TextInput
                 style={stylesGlobal.textInput}
                 placeholder="Login"

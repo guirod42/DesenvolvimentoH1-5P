@@ -5,21 +5,30 @@ import {
     View,
     FlatList,
     ScrollView,
+    TextInput
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../../styles/colors';
 import Cabecalho from '../../components/CabecalhoProjeto';
 import Pessoa from '../../components/PersonBox';
-import imgTeste from '../../assets/images/Druid.jpg';
-import api from '../../apiService/api';
 
-export default function Login() {
+
+
+
+import api from '../../apiService/api';
+import stylesGlobal from '../../styles/styles';
+import { AntDesign } from '@expo/vector-icons';
+const search = 'search1';
+
+export default function PaginaAluno() {
 
     const [userName, setUserName] = useState('');
     const [userID, setUserID] = useState('');
-    const [userList, setuserList] = useState([]);
+    const [professorsList, setProfessorsList] = useState([]);
     const navigation = useNavigation();
+    const [searchText, setSearchText] = useState('');
+    const iconPass = search;
 
     async function loadStoreUserName() {
         const user = await AsyncStorage.getItem('@SistemaTCC:userName') || '';
@@ -28,16 +37,33 @@ export default function Login() {
         setUserName(user);
     }
 
-    async function loadProfessores() {
+    async function searchTeachers() {
         await api.get('/usuarios?tipo=2').then((response) => {
-            setuserList(response.data);
+            setProfessorsList(response.data);
         }).catch(err => console.log(err));
     }
+
+    const noResultsComponent = (
+        <View style={[styles.item, { justifyContent: 'center', height: 50 }]}>
+            <Text style={{ fontStyle: 'italic' }}>Nenhum resultado encontrado</Text>
+        </View>
+    );
+
+    const filteredTeachers = professorsList.filter(
+        (item) => item.nome.toLowerCase().includes(searchText.toLowerCase())
+    );
+
+    const renderItem = ({ item }) => (
+        <Pessoa
+            img={item.imagem}
+            nome={item.nome}
+            id={item.id} />
+    );
 
     useEffect(
         () => {
             loadStoreUserName();
-            loadProfessores();
+            searchTeachers();
         },
         []
     );
@@ -46,22 +72,33 @@ export default function Login() {
         <View style={styles.container}>
             <Cabecalho title={"Bem-vindo(a) " + userName} onPress={() => navigation.goBack()} />
             <Text style={styles.textTitle}>{"Defina o professor"}</Text>
-            <FlatList
-                data={userList}
-                renderItem={({ item }) => (
-                    <Pessoa
-                        picture={imgTeste}
-                        nome={item.nome}
-                        id={item.id}
-                    />
-                )}
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={styles.itemJokeCSS}
-                keyExtractor={item => item.id}
-            />
-            <Text style={styles.textTitle}>{"Fim de página"}</Text>
+            <View style={stylesGlobal.passwordContainer}>
+                <TextInput
+                    style={stylesGlobal.textInputPassword}
+                    placeholder="Busque o professor..."
+                    onChangeText={text => setSearchText(text)}
+                    value={searchText}
+                />
+                <AntDesign
+                    style={stylesGlobal.iconEye}
+                    name={iconPass}
+                    size={28}
+                    color={colors.black}
+                />
+            </View>
+            {filteredTeachers.length > 0 ? (
+                <FlatList
+                    data={filteredTeachers}
+                    renderItem={renderItem}
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={styles.flatList}
+                    keyExtractor={item => item.id}
+                />
+            ) : (
+                noResultsComponent
+            )}
         </View>
-    );
+    )
 }
 
 const styles = StyleSheet.create({
@@ -86,11 +123,8 @@ const styles = StyleSheet.create({
         marginTop: 35,
     },
 
-    jokeListCss: {
-
-    },
-
-    itemJokeCSS: {
-
+    flatList: {
+        width: '110%',
+        alignItems: 'center'
     }
 });

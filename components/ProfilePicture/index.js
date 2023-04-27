@@ -5,10 +5,10 @@ import React, { useState } from 'react';
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 import colors from '../../styles/colors';
 
-export default function ProfilePicture(props) {
+export default function ProfilePicture(obj) {
   return (
     <View style={styles.circle}>
-      <Image source={props.source} style={styles.image} />
+      <Image source={{uri: obj.img}} style={styles.image} />
     </View>
   );
 }

@@ -106,7 +106,7 @@ export default function CadastroAluno() {
                 password: txtSenha,
                 tipo: txtTipo
             }
-            const response = await api.post('/usuarios', objNewPerson);
+            const response = api.post('/usuarios', objNewPerson);
             alert('Usuário Criado!');
             navigation.navigate('PaginaLogin');
             return;
